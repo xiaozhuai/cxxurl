@@ -33,8 +33,6 @@ int main() {
     RequestBuilder builder;
     builder.url("http://localhost:10000/public/test_form.php")
             .followLocation(true)
-            .query("bbb", "222")
-            .query("ccc", "333")
             .form(&simpleForm)
 //            .form(&multipartForm)
 //            .form(&rawForm)

@@ -19,8 +19,6 @@ class RequestBuilder {
     public:
         RequestBuilder &url(string url);
 
-        RequestBuilder &query(string key, string value);
-
         RequestBuilder &followLocation(bool followLocation);
 
         RequestBuilder &contentOutput(ostream *stream);
@@ -46,10 +44,6 @@ class RequestBuilder {
 
     protected:
         Request request;
-        string _url;
-        map<string, string> queryMap;
-
-        string generateRealUrl();
 
 
 

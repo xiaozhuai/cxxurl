@@ -16,30 +16,8 @@ RequestBuilder::~RequestBuilder() {
 }
 
 RequestBuilder& RequestBuilder::url(string url) {
-    _url = url;
+    request.setUrl(url);
     return *this;
-}
-
-RequestBuilder& RequestBuilder::query(string key, string value) {
-    queryMap[key] = value;
-    return *this;
-}
-
-string RequestBuilder::generateRealUrl() {
-    string realUrl = _url;
-    string queryStr = "";
-    map<string, string>::iterator it;
-    for (it = queryMap.begin(); it != queryMap.end(); it++) {
-        queryStr += "&" + it->first + "=" + it->second;
-    }
-    if (_url.find('?') != string::npos) {
-        realUrl += queryStr;
-    } else {
-        if (queryStr != "") {
-            realUrl += "?" + queryStr.substr(1);
-        }
-    }
-    return realUrl;
 }
 
 RequestBuilder& RequestBuilder::followLocation(bool followLocation) {
@@ -78,7 +56,6 @@ RequestBuilder& RequestBuilder::referer(string referer) {
 }
 
 Request& RequestBuilder::build() {
-    request.setUrl(generateRealUrl());
     return request;
 }
 
