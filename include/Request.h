@@ -82,9 +82,6 @@ class Request {
     protected:
         static size_t writeContent(char* buffer, size_t size, size_t count, void* stream);
         static size_t writeHeader(char* buffer, size_t size, size_t count, void* stream);
-
-    protected:
-        string postData;
 };
 
 }

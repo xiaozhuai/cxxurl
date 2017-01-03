@@ -125,7 +125,7 @@ CURLcode Request::exec(METHOD_TYPE method) {
                 }
                 case Form::MULTIPART: {
                     MultipartForm *multipartForm = (MultipartForm *) form;
-                    curl_easy_setopt(curl, CURLOPT_HTTPPOST, multipartForm->getData());
+                    SET_CURL_OPT(CURLOPT_HTTPPOST, multipartForm->getData());
                     break;
                 }
                 case Form::RAW: {
