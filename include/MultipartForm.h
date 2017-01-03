@@ -25,7 +25,7 @@ class MultipartForm : public Form {
     public:
         void add(string key, string value);
         void addFile(string key, string filePath);
-        struct curl_httppost* generateMultipartFormData();
+        struct curl_httppost* getData();
 
     protected:
         struct curl_httppost* formpost;

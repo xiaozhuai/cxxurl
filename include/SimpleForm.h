@@ -20,10 +20,12 @@ class SimpleForm : public Form{
 
     public:
         void add(string key, string value);
-        string generateSimpleFormQueryString();
+        char* getData();
+        size_t length();
 
     protected:
         map<string, string> formDataMap;
+        string data;
 
 
 

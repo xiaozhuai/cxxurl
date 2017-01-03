@@ -119,15 +119,13 @@ CURLcode Request::exec(METHOD_TYPE method) {
             switch (form->type){
                 case Form::SIMPLE: {
                     SimpleForm *simpleForm = (SimpleForm *) form;
-                    postData = simpleForm->generateSimpleFormQueryString();
-                    SET_CURL_OPT(CURLOPT_POSTFIELDS, postData.c_str());
-                    SET_CURL_OPT(CURLOPT_POSTFIELDSIZE, postData.length());
+                    SET_CURL_OPT(CURLOPT_POSTFIELDS, simpleForm->getData());
+                    SET_CURL_OPT(CURLOPT_POSTFIELDSIZE, simpleForm->length());
                     break;
                 }
                 case Form::MULTIPART: {
                     MultipartForm *multipartForm = (MultipartForm *) form;
-                    struct curl_httppost* formpost = multipartForm->generateMultipartFormData();
-                    curl_easy_setopt(curl, CURLOPT_HTTPPOST, formpost);
+                    curl_easy_setopt(curl, CURLOPT_HTTPPOST, multipartForm->getData());
                     break;
                 }
                 case Form::RAW: {

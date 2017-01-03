@@ -12,13 +12,18 @@ SimpleForm::SimpleForm() :
 
 }
 
-string SimpleForm::generateSimpleFormQueryString() {
+char* SimpleForm::getData() {
     string queryStr = "";
     map<string, string>::iterator it;
     for (it = formDataMap.begin(); it != formDataMap.end(); it++) {
         queryStr += "&" + it->first + "=" + it->second;
     }
-    return UrlEncode::encode(queryStr.substr(1));
+    data = UrlEncode::encode(queryStr.substr(1));
+    return data.data();
+}
+
+size_t SimpleForm::length() {
+    return data.length();
 }
 
 void SimpleForm::add(string key, string value) {

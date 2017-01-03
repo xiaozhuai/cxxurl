@@ -27,7 +27,7 @@ void MultipartForm::addFile(string key, string filePath) {
     formDataFileMap[key] = filePath;
 }
 
-struct curl_httppost* MultipartForm::generateMultipartFormData() {
+struct curl_httppost* MultipartForm::getData() {
 
     map<string, string>::iterator itv;
     for (itv = formDataValueMap.begin(); itv != formDataValueMap.end(); itv++) {
