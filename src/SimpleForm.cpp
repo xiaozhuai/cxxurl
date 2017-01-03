@@ -19,7 +19,7 @@ char* SimpleForm::getData() {
         queryStr += "&" + it->first + "=" + it->second;
     }
     data = UrlEncode::encode(queryStr.substr(1));
-    return data.data();
+    return (char*)data.data();
 }
 
 size_t SimpleForm::length() {
