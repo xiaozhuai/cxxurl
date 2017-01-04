@@ -65,6 +65,11 @@ RequestBuilder& RequestBuilder::timeout(long milliSeconds) {
     return *this;
 }
 
+RequestBuilder& RequestBuilder::proxy(string proxy) {
+    request.setProxy(proxy);
+    return *this;
+}
+
 Request& RequestBuilder::build() {
     return request;
 }

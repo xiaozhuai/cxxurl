@@ -37,6 +37,8 @@ class RequestBuilder {
 
         RequestBuilder &timeout(long milliSeconds);
 
+        RequestBuilder &proxy(string proxy);
+
     public:
         Request &build();
 

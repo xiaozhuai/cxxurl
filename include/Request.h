@@ -9,6 +9,7 @@
 #include <curl/curl.h>
 #include <string>
 #include <iostream>
+#include <stdlib.h>
 #include "version.h"
 #include "Form.h"
 #include "SimpleForm.h"
@@ -88,6 +89,11 @@ class Request {
         long timeout;
         void setTimeout(long milliSeconds);
         long getTimeout();
+
+    public:
+        string proxy;
+        void setProxy(string proxy);
+        string getProxy();
 
     public:
         CURLcode get();

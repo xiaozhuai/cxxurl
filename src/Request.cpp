@@ -15,7 +15,8 @@ Request::Request() :
         form(NULL),
         referer(""),
         header(NULL),
-        timeout(0L) {
+        timeout(0L),
+        proxy("") {
 
     userAgent = string("") + "CXXUrl/" + CXX_URL_VERSION + " " + curl_version();
 }
@@ -115,6 +116,14 @@ long Request::getTimeout() {
     return timeout;
 }
 
+void Request::setProxy(string proxy) {
+    this->proxy = proxy;
+}
+
+string Request::getProxy() {
+    return proxy;
+}
+
 CURLcode Request::get() {
     return exec(GET);
 }
@@ -185,6 +194,13 @@ CURLcode Request::exec(METHOD_TYPE method) {
 
     if(timeout>0L){
         SET_CURL_OPT(CURLOPT_TIMEOUT_MS, timeout);
+    }
+
+
+    if(proxy.empty()) proxy = getenv("http_proxy");
+    if(proxy.empty()) proxy = getenv("HTTP_PROXY");
+    if(!proxy.empty()){
+        SET_CURL_OPT(CURLOPT_PROXY, proxy.c_str());
     }
 
     if (maxRedirs != -1)
