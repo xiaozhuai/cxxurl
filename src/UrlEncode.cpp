@@ -3,7 +3,7 @@
  * @date   : 17/1/3
  */
 
-#include "../include/UrlEncode.h"
+#include "UrlEncode.h"
 
 namespace CXXUrl {
 

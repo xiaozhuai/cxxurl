@@ -3,7 +3,7 @@
  * @date   : 17/1/3
  */
 
-#include "../include/SimpleForm.h"
+#include "SimpleForm.h"
 
 namespace CXXUrl {
 

@@ -3,7 +3,7 @@
  * @date   : 17/1/3
  */
 
-#include "../include/RequestBuilder.h"
+#include "RequestBuilder.h"
 
 namespace CXXUrl {
 
