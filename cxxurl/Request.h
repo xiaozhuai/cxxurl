@@ -104,6 +104,15 @@ class Request {
         string getCookieExportFile();
 
     public:
+        bool verifySSL;
+        void setVerifySSL(bool enable);
+        bool getVerifySSL();
+        string cacert;
+        void setCacert(string pemFile);
+        string getCacert();
+
+
+    public:
         CURLcode get();
         CURLcode post();
         CURLcode exec(METHOD_TYPE method);

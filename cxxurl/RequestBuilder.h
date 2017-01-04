@@ -43,6 +43,10 @@ class RequestBuilder {
 
         RequestBuilder &exportCookie(string filePath);
 
+        RequestBuilder &verifySSL(bool enable);
+
+        RequestBuilder &cacert(string pemFile);
+
     public:
         Request &build();
 

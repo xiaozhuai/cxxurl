@@ -80,6 +80,16 @@ RequestBuilder& RequestBuilder::exportCookie(string filePath) {
     return *this;
 }
 
+RequestBuilder& RequestBuilder::verifySSL(bool enable) {
+    request.setVerifySSL(enable);
+    return *this;
+}
+
+RequestBuilder& RequestBuilder::cacert(string pemFile) {
+    request.setCacert(pemFile);
+    return *this;
+}
+
 Request& RequestBuilder::build() {
     return request;
 }

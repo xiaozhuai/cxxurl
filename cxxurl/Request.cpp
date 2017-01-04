@@ -18,7 +18,9 @@ Request::Request() :
         timeout(0L),
         proxy(""),
         cookieImportFile(""),
-        cookieExportFile("") {
+        cookieExportFile(""),
+        verifySSL(false),
+        cacert(""){
 
     userAgent = string("") + "CXXUrl/" + CXX_URL_VERSION + " " + curl_version();
 }
@@ -142,6 +144,22 @@ string Request::getCookieExportFile() {
     return cookieExportFile;
 }
 
+void Request::setVerifySSL(bool enable) {
+    this->verifySSL = enable;
+}
+
+bool Request::getVerifySSL() {
+    return verifySSL;
+}
+
+void Request::setCacert(string pemFile) {
+    this->cacert = pemFile;
+}
+
+string Request::getCacert() {
+    return cacert;
+}
+
 CURLcode Request::get() {
     return exec(GET);
 }
@@ -154,7 +172,7 @@ CURLcode Request::exec(METHOD_TYPE method) {
     curl = curl_easy_init();
 
     SET_CURL_OPT(CURLOPT_URL, url.c_str());
-//    SET_CURL_OPT(CURLOPT_VERBOSE, 1);
+    SET_CURL_OPT(CURLOPT_VERBOSE, 1);
 
 
     switch (method){
@@ -228,6 +246,15 @@ CURLcode Request::exec(METHOD_TYPE method) {
     }
     if(cookieExportFile!=""){
         SET_CURL_OPT(CURLOPT_COOKIEJAR, cookieExportFile.c_str());
+    }
+
+    if(verifySSL && cacert!=""){
+        SET_CURL_OPT(CURLOPT_SSL_VERIFYPEER, 1);
+        SET_CURL_OPT(CURLOPT_SSL_VERIFYHOST, 1);
+        SET_CURL_OPT(CURLOPT_CAINFO, cacert.c_str());
+    }else{
+        SET_CURL_OPT(CURLOPT_SSL_VERIFYPEER, 0);
+        SET_CURL_OPT(CURLOPT_SSL_VERIFYHOST, 0);
     }
 
     if (maxRedirs != -1)
