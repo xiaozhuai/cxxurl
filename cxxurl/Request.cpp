@@ -172,7 +172,7 @@ CURLcode Request::exec(METHOD_TYPE method) {
     curl = curl_easy_init();
 
     SET_CURL_OPT(CURLOPT_URL, url.c_str());
-    SET_CURL_OPT(CURLOPT_VERBOSE, 1);
+//    SET_CURL_OPT(CURLOPT_VERBOSE, 1);
 
 
     switch (method){
