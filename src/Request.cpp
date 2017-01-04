@@ -14,7 +14,8 @@ Request::Request() :
         maxRedirs(-1),
         form(NULL),
         referer(""),
-        header(NULL) {
+        header(NULL),
+        timeout(0L) {
 
     userAgent = string("") + "CXXUrl/" + CXX_URL_VERSION + " " + curl_version();
 }
@@ -106,6 +107,14 @@ Header* Request::getHeader() {
     return header;
 }
 
+void Request::setTimeout(long milliSeconds) {
+    timeout = milliSeconds;
+}
+
+long Request::getTimeout() {
+    return timeout;
+}
+
 CURLcode Request::get() {
     return exec(GET);
 }
@@ -172,6 +181,10 @@ CURLcode Request::exec(METHOD_TYPE method) {
 
     if(header!=NULL){
         SET_CURL_OPT(CURLOPT_HTTPHEADER, header->getHeaders());
+    }
+
+    if(timeout>0L){
+        SET_CURL_OPT(CURLOPT_TIMEOUT_MS, timeout);
     }
 
     if (maxRedirs != -1)

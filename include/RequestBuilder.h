@@ -35,6 +35,8 @@ class RequestBuilder {
 
         RequestBuilder &header(Header *header);
 
+        RequestBuilder &timeout(long milliSeconds);
+
     public:
         Request &build();
 

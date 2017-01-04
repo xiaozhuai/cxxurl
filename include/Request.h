@@ -85,6 +85,11 @@ class Request {
         Header* getHeader();
 
     public:
+        long timeout;
+        void setTimeout(long milliSeconds);
+        long getTimeout();
+
+    public:
         CURLcode get();
         CURLcode post();
         CURLcode exec(METHOD_TYPE method);

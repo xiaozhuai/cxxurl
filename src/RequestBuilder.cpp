@@ -60,6 +60,11 @@ RequestBuilder& RequestBuilder::header(Header *header) {
     return *this;
 }
 
+RequestBuilder& RequestBuilder::timeout(long milliSeconds) {
+    request.setTimeout(milliSeconds);
+    return *this;
+}
+
 Request& RequestBuilder::build() {
     return request;
 }
