@@ -15,8 +15,8 @@ MultipartForm::MultipartForm() :
 }
 
 MultipartForm::~MultipartForm() {
-    curl_formfree(formpost);
-    curl_formfree(lastptr);
+    if(formpost!=NULL) curl_formfree(formpost);
+    if(lastptr!=NULL) curl_formfree(lastptr);
 }
 
 void MultipartForm::add(string key, string value) {

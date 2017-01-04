@@ -55,6 +55,11 @@ RequestBuilder& RequestBuilder::referer(string referer) {
     return *this;
 }
 
+RequestBuilder& RequestBuilder::header(Header *header) {
+    request.setHeader(header);
+    return *this;
+}
+
 Request& RequestBuilder::build() {
     return request;
 }

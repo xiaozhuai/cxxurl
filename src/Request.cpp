@@ -13,7 +13,8 @@ Request::Request() :
         headerOutput(NULL),
         maxRedirs(-1),
         form(NULL),
-        referer("") {
+        referer(""),
+        header(NULL) {
 
     userAgent = string("") + "CXXUrl/" + CXX_URL_VERSION + " " + curl_version();
 }
@@ -97,6 +98,14 @@ string Request::getReferer() {
     return referer;
 }
 
+void Request::setHeader(Header *header) {
+    this->header = header;
+}
+
+Header* Request::getHeader() {
+    return header;
+}
+
 CURLcode Request::get() {
     return exec(GET);
 }
@@ -147,6 +156,10 @@ CURLcode Request::exec(METHOD_TYPE method) {
 
     if(referer!=""){
         SET_CURL_OPT(CURLOPT_REFERER, referer.c_str());
+    }
+
+    if(header!=NULL){
+        SET_CURL_OPT(CURLOPT_HTTPHEADER, header);
     }
 
     if (maxRedirs != -1)

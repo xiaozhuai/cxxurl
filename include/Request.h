@@ -14,6 +14,7 @@
 #include "SimpleForm.h"
 #include "MultipartForm.h"
 #include "RawForm.h"
+#include "Header.h"
 
 #define SET_CURL_OPT(opt,value)          curl_easy_setopt((this->curl),(opt),(value))
 
@@ -77,6 +78,11 @@ class Request {
         string referer;
         void setReferer(string referer);
         string getReferer();
+
+    public:
+        Header* header;
+        void setHeader(Header* header);
+        Header* getHeader();
 
     public:
         CURLcode get();

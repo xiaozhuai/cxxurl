@@ -33,6 +33,8 @@ class RequestBuilder {
 
         RequestBuilder &referer(string referer);
 
+        RequestBuilder &header(Header *header);
+
     public:
         Request &build();
 
