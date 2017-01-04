@@ -96,6 +96,14 @@ class Request {
         string getProxy();
 
     public:
+        string cookieImportFile;
+        string cookieExportFile;
+        void setCookieImportFile(string filePath);
+        void setCookieExportFile(string filePath);
+        string getCookieImportFile();
+        string getCookieExportFile();
+
+    public:
         CURLcode get();
         CURLcode post();
         CURLcode exec(METHOD_TYPE method);

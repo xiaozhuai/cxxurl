@@ -70,6 +70,16 @@ RequestBuilder& RequestBuilder::proxy(string proxy) {
     return *this;
 }
 
+RequestBuilder& RequestBuilder::importCookie(string filePath) {
+    request.setCookieImportFile(filePath);
+    return *this;
+}
+
+RequestBuilder& RequestBuilder::exportCookie(string filePath) {
+    request.setCookieExportFile(filePath);
+    return *this;
+}
+
 Request& RequestBuilder::build() {
     return request;
 }

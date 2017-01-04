@@ -16,7 +16,9 @@ Request::Request() :
         referer(""),
         header(NULL),
         timeout(0L),
-        proxy("") {
+        proxy(""),
+        cookieImportFile(""),
+        cookieExportFile("") {
 
     userAgent = string("") + "CXXUrl/" + CXX_URL_VERSION + " " + curl_version();
 }
@@ -124,6 +126,22 @@ string Request::getProxy() {
     return proxy;
 }
 
+void Request::setCookieImportFile(string filePath) {
+    cookieImportFile = filePath;
+}
+
+void Request::setCookieExportFile(string filePath) {
+    cookieExportFile = filePath;
+}
+
+string Request::getCookieImportFile() {
+    return cookieImportFile;
+}
+
+string Request::getCookieExportFile() {
+    return cookieExportFile;
+}
+
 CURLcode Request::get() {
     return exec(GET);
 }
@@ -197,10 +215,19 @@ CURLcode Request::exec(METHOD_TYPE method) {
     }
 
 
-    if(proxy.empty()) proxy = getenv("http_proxy");
-    if(proxy.empty()) proxy = getenv("HTTP_PROXY");
-    if(!proxy.empty()){
+    if(proxy!=""){
         SET_CURL_OPT(CURLOPT_PROXY, proxy.c_str());
+    }else{
+        char* envProxy = getenv("http_proxy");
+        if(envProxy==NULL) envProxy = getenv("HTTP_PROXY");
+        if(envProxy!=NULL) SET_CURL_OPT(CURLOPT_PROXY, envProxy);
+    }
+
+    if(cookieImportFile!=""){
+        SET_CURL_OPT(CURLOPT_COOKIEFILE, cookieImportFile.c_str());
+    }
+    if(cookieExportFile!=""){
+        SET_CURL_OPT(CURLOPT_COOKIEJAR, cookieExportFile.c_str());
     }
 
     if (maxRedirs != -1)

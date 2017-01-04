@@ -43,6 +43,7 @@ int main() {
             .form(&simpleForm)
 //            .form(&multipartForm)
 //            .form(&rawForm)
+            .exportCookie("/tmp/cookie_test")
             .headerOutput(&headerOutput)
             .contentOutput(&contentOutput);
 
@@ -55,6 +56,17 @@ int main() {
 
 //    cout << "[code]\n" << res << "\n\n[header]\n" << headerOutput.str() << endl;
     cout << "[code]\n" << res << "\n\n[header]\n" << headerOutput.str() << "\n\n[content]\n" << contentOutput.str() << endl << flush;
+
+
+    ostringstream contentOutput2;
+
+    RequestBuilder builder2;
+    builder2.url("http://localhost:10000/public/test_cookie.php")
+            .importCookie("/tmp/cookie_test")
+            .contentOutput(&contentOutput2);
+    Request& request2 = builder2.build();
+    CURLcode res2 = request2.get();
+    cout << "[code]\n" << res2 << "\n\n[content]\n" << contentOutput2.str() << endl << flush;
 
 
     return 0;

@@ -39,6 +39,10 @@ class RequestBuilder {
 
         RequestBuilder &proxy(string proxy);
 
+        RequestBuilder &importCookie(string filePath);
+
+        RequestBuilder &exportCookie(string filePath);
+
     public:
         Request &build();
 
