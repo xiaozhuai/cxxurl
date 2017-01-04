@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "../src/CXXUrl.h"
+#include "cxxurl_all.h"
 #include <iostream>
 #include <sstream>
 #include <fstream>
