@@ -309,7 +309,7 @@ int main(int argc, char** argv){
             .contentOutput(&contentOutput2);
 
     Request& request2 = builder2.build();
-    CURLcode res2 = request2.post();
+    CURLcode res2 = request2.get();
 
     cout << "***************** CODE *****************"    << endl << res2                 << endl
          << "***************** CONTENT *****************" << endl << contentOutput2.str() << endl
