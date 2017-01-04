@@ -14,7 +14,7 @@ Under [MIT LICENSE](LICENSE.md)
 
 执行下面的命令
 
-```
+```bash
 $ cd /path/to/cxxurl
 $ mkdir build
 $ cmake ..
@@ -23,7 +23,7 @@ $ make
 
 然后就可以运行示例了，例如
 
-```
+```bash
 $ ./example_get
 ```
 
@@ -53,7 +53,7 @@ include_directories(cxxurl ${CURL_INCLUDE_DIR})                #set curl include
 
 ## Get
 
-```
+```c++
 #include <iostream>
 #include <sstream>
 #include "cxxurl_all.h"
@@ -84,7 +84,7 @@ int main(int argc, char** argv){
 
 像这样
 
-```
+```c++
 #include <iostream>
 #include <sstream>
 #include <fstream>
@@ -114,7 +114,7 @@ int main(int argc, char** argv){
 
 如果你需要响应头的输出，可以这样
 
-```
+```c++
 #include <iostream>
 #include <sstream>
 #include "cxxurl_all.h"
@@ -146,7 +146,7 @@ int main(int argc, char** argv){
 
 发起一个post请求或许比get要复杂一些，但仍然是一件非常简单的事情
 
-```
+```c++
 #include <iostream>
 #include <sstream>
 #include "cxxurl_all.h"
@@ -198,7 +198,7 @@ CXXUrl 提供了三者form类型 `SimpleForm`, `MultipartForm` 和 `RawForm`.
 
 ## Https
 
-```
+```c++
 #include <iostream>
 #include <sstream>
 #include "cxxurl_all.h"
@@ -231,7 +231,7 @@ int main(int argc, char** argv){
 
 设置Request Headers用法类似于form
 
-```
+```c++
 #include <iostream>
 #include <sstream>
 #include "cxxurl_all.h"
@@ -271,7 +271,7 @@ int main(int argc, char** argv){
 
 完成这个过程，只需要这样
 
-```
+```c++
 #include <iostream>
 #include <sstream>
 #include "cxxurl_all.h"

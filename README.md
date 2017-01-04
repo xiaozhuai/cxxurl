@@ -12,7 +12,7 @@ author: xiaozhuai - [xiaozhuai7@gmail.com](xiaozhuai7@gmail.com)
 
 # Run Example
 
-```
+```bash
 $ cd /path/to/cxxurl
 $ mkdir build
 $ cmake ..
@@ -21,7 +21,7 @@ $ make
 
 Then you can run example, such as 
 
-```
+```bash
 $ ./example_get
 ```
 
@@ -51,7 +51,7 @@ You can find all example source in example dir.
 
 ## Get
 
-```
+```c++
 #include <iostream>
 #include <sstream>
 #include "cxxurl_all.h"
@@ -82,7 +82,7 @@ You can simplely download a file just change the `contentOutput` to a `ofstream`
 
 like this
 
-```
+```c++
 #include <iostream>
 #include <sstream>
 #include <fstream>
@@ -112,7 +112,7 @@ int main(int argc, char** argv){
 
 And if you need header output, just set it
 
-```
+```c++
 #include <iostream>
 #include <sstream>
 #include "cxxurl_all.h"
@@ -144,7 +144,7 @@ int main(int argc, char** argv){
 
 Do a post request maybe something more than get request, but it's still easy
 
-```
+```c++
 #include <iostream>
 #include <sstream>
 #include "cxxurl_all.h"
@@ -196,7 +196,7 @@ CXXUrl provide three form type, `SimpleForm`, `MultipartForm` and `RawForm`.
 
 ## Https
 
-```
+```c++
 #include <iostream>
 #include <sstream>
 #include "cxxurl_all.h"
@@ -229,7 +229,7 @@ And you can disable ssl verify on a https website by `.verifySSL(false)`
 
 Headers usage look like post form
 
-```
+```c++
 #include <iostream>
 #include <sstream>
 #include "cxxurl_all.h"
@@ -269,7 +269,7 @@ First, we need export cookies to a file when login some website, and then import
 
 Something like this
 
-```
+```c++
 #include <iostream>
 #include <sstream>
 #include "cxxurl_all.h"
