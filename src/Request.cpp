@@ -120,35 +120,47 @@ CURLcode Request::exec(METHOD_TYPE method) {
     SET_CURL_OPT(CURLOPT_URL, url.c_str());
 //    SET_CURL_OPT(CURLOPT_VERBOSE, 1);
 
-    if (method == POST) {
-        SET_CURL_OPT(CURLOPT_POST, 1);
-        if (form == NULL)
-            SET_CURL_OPT(CURLOPT_POSTFIELDS, "");
-        else {
-            switch (form->type){
-                case Form::SIMPLE: {
-                    SimpleForm *simpleForm = (SimpleForm *) form;
-                    SET_CURL_OPT(CURLOPT_POSTFIELDS, simpleForm->getData());
-                    SET_CURL_OPT(CURLOPT_POSTFIELDSIZE, simpleForm->length());
-                    break;
-                }
-                case Form::MULTIPART: {
-                    MultipartForm *multipartForm = (MultipartForm *) form;
-                    SET_CURL_OPT(CURLOPT_HTTPPOST, multipartForm->getData());
-                    break;
-                }
-                case Form::RAW: {
-                    RawForm *rawForm = (RawForm *) form;
-                    SET_CURL_OPT(CURLOPT_POSTFIELDS, rawForm->getData());
-                    SET_CURL_OPT(CURLOPT_POSTFIELDSIZE, rawForm->length());
-                    break;
-                }
-                default:
-                    cerr << "form type unknown" << endl;
-                    break;
-            }
+
+    switch (method){
+        case GET: {
+            SET_CURL_OPT(CURLOPT_HTTPGET, 1);
+            break;
         }
+        case POST: {
+            SET_CURL_OPT(CURLOPT_POST, 1);
+            if (form == NULL) {
+                SET_CURL_OPT(CURLOPT_POSTFIELDS, "");
+                SET_CURL_OPT(CURLOPT_POSTFIELDSIZE, 0);
+            } else {
+                switch (form->type){
+                    case Form::SIMPLE: {
+                        SimpleForm *simpleForm = (SimpleForm *) form;
+                        SET_CURL_OPT(CURLOPT_POSTFIELDS, simpleForm->getData());
+                        SET_CURL_OPT(CURLOPT_POSTFIELDSIZE, simpleForm->length());
+                        break;
+                    }
+                    case Form::MULTIPART: {
+                        MultipartForm *multipartForm = (MultipartForm *) form;
+                        SET_CURL_OPT(CURLOPT_HTTPPOST, multipartForm->getData());
+                        break;
+                    }
+                    case Form::RAW: {
+                        RawForm *rawForm = (RawForm *) form;
+                        SET_CURL_OPT(CURLOPT_POSTFIELDS, rawForm->getData());
+                        SET_CURL_OPT(CURLOPT_POSTFIELDSIZE, rawForm->length());
+                        break;
+                    }
+                    default:
+                        cerr << "form type unknown" << endl;
+                        break;
+                }
+            }
+            break;
+        }
+        default:
+            cerr << "unknown method" << endl;
     }
+
 
 
     SET_CURL_OPT(CURLOPT_FOLLOWLOCATION, followLocation);
