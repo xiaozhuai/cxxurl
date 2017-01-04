@@ -30,9 +30,16 @@ int main() {
     RawForm rawForm;
     rawForm.setRawText("hello world");
 
+    Header header;
+    header.add("name", "xiaozhuai");
+    header.add("sex", "male");
+    header.add("age", "23");
+    header.add("aaaaabbbbb: aa11");
+
     RequestBuilder builder;
     builder.url("http://localhost:10000/public/test_form.php")
             .followLocation(true)
+            .header(&header)
             .form(&simpleForm)
 //            .form(&multipartForm)
 //            .form(&rawForm)

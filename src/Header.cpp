@@ -13,22 +13,22 @@ Header::Header() :
 }
 
 Header::~Header() {
-    if(curlSlist!=NULL) curl_slist_free_all(list);
+    if(curlSlist!=NULL) curl_slist_free_all(curlSlist);
 }
 
 void Header::add(string key, string value) {
-    headList.insert(key + ": " + value);
+    headList.push_back(key + ": " + value);
 }
 
 void Header::add(string line) {
-    headList.insert(line);
+    headList.push_back(line);
 }
 
 struct curl_slist* Header::getHeaders() {
-    if(curlSlist!=NULL) curl_slist_free_all(list);
+    if(curlSlist!=NULL) curl_slist_free_all(curlSlist);
 
     for(int i=0; i<headList.size(); i++){
-        curlSlist = curl_slist_append(curlSlist, headList[i]);
+        curlSlist = curl_slist_append(curlSlist, headList[i].c_str());
     }
     return curlSlist;
 }

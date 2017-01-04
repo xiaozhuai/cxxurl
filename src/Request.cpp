@@ -159,7 +159,7 @@ CURLcode Request::exec(METHOD_TYPE method) {
     }
 
     if(header!=NULL){
-        SET_CURL_OPT(CURLOPT_HTTPHEADER, header);
+        SET_CURL_OPT(CURLOPT_HTTPHEADER, header->getHeaders());
     }
 
     if (maxRedirs != -1)
