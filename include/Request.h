@@ -44,6 +44,10 @@ class Request {
         ostream* getContentOutput();
         ostream* getHeaderOutput();
 
+    protected:
+        static size_t writeContent(char* buffer, size_t size, size_t count, void* stream);
+        static size_t writeHeader(char* buffer, size_t size, size_t count, void* stream);
+
     public:
         string url;
         void setUrl(string url);
@@ -79,9 +83,6 @@ class Request {
         CURLcode post();
         CURLcode exec(METHOD_TYPE method);
 
-    protected:
-        static size_t writeContent(char* buffer, size_t size, size_t count, void* stream);
-        static size_t writeHeader(char* buffer, size_t size, size_t count, void* stream);
 };
 
 }
