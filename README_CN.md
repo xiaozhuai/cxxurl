@@ -354,5 +354,35 @@ int main(int argc, char** argv){
 这个例子和第一个例子(get)是完全等效的，
 不同之处是使用了 `.setCurlOptionString(CURLOPT_URL, "http://xiaozhuai.github.io")` 来替代 `.url("http://xiaozhuai.github.io")`
 
+## RequestBuilder
+
+RequestBuilder正如它的名字，仅仅是个builder，它只是为了简化代码，你完全可以不使用它，就像这样
+
+```
+#include <iostream>
+#include <sstream>
+#include "cxxurl_all.h"
+
+using namespace std;
+using namespace CXXUrl;
+
+int main(int argc, char** argv){
+    ostringstream contentOutput;
+
+    Request request;
+    request.setUrl("http://xiaozhuai.github.io");
+    request.setFollowLocation(true);
+    request.setContentOutput(&contentOutput);
+
+    CURLcode res = request.get();
+
+    cout << "***************** CODE *****************"    << endl << res                  << endl
+         << "***************** CONTENT *****************" << endl << contentOutput.str()  << endl
+         << flush;
+}
+```
+
+那么你喜欢哪种方式呢？
+
 # 最后
 感谢cURL

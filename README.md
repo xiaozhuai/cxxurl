@@ -353,5 +353,35 @@ int main(int argc, char** argv){
 This example is just the same with simple get example.
 The deference is use `.setCurlOptionString(CURLOPT_URL, "http://xiaozhuai.github.io")` to take place of `.url("http://xiaozhuai.github.io")`
 
+## RequestBuilder
+
+This just a builder to simplify code. Yes, you can use CXXurl without builder, it's just fine.
+
+```
+#include <iostream>
+#include <sstream>
+#include "cxxurl_all.h"
+
+using namespace std;
+using namespace CXXUrl;
+
+int main(int argc, char** argv){
+    ostringstream contentOutput;
+
+    Request request;
+    request.setUrl("http://xiaozhuai.github.io");
+    request.setFollowLocation(true);
+    request.setContentOutput(&contentOutput);
+
+    CURLcode res = request.get();
+
+    cout << "***************** CODE *****************"    << endl << res                  << endl
+         << "***************** CONTENT *****************" << endl << contentOutput.str()  << endl
+         << flush;
+}
+```
+
+So, which one do you prefer?
+
 # At last
 Thank cURL
