@@ -7,6 +7,8 @@ set(CXXURL_SRC cxxurl/cxxurl_all.cpp)
 
 find_package(CURL REQUIRED)
 
+include_directories(cxxurl ${CURL_INCLUDE_DIR})
+
 #example_get
 add_executable(example_get example/example_get.cpp ${CXXURL_SRC})
 target_link_libraries(example_get ${CURL_LIBRARY})
@@ -46,8 +48,6 @@ target_link_libraries(example_use_curl_option ${CURL_LIBRARY})
 #example_without_request_builder
 add_executable(example_without_request_builder example/example_without_request_builder.cpp ${CXXURL_SRC})
 target_link_libraries(example_without_request_builder ${CURL_LIBRARY})
-
-include_directories(cxxurl ${CURL_INCLUDE_DIR})
 
 
 
