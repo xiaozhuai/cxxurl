@@ -326,7 +326,7 @@ int main(int argc, char** argv){
 如果你想要使用原生的CURL选项，看这里
 
 
-```
+```c++
 #include <iostream>
 #include <sstream>
 #include "cxxurl_all.h"
@@ -358,7 +358,7 @@ int main(int argc, char** argv){
 
 RequestBuilder正如它的名字，仅仅是个builder，它只是为了简化代码，你完全可以不使用它，就像这样
 
-```
+```c++
 #include <iostream>
 #include <sstream>
 #include "cxxurl_all.h"

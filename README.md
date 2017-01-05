@@ -325,7 +325,7 @@ Yes, if you want to use plain CURL api, here CXXurl provide a method.
 
 look this
 
-```
+```c++
 #include <iostream>
 #include <sstream>
 #include "cxxurl_all.h"
@@ -357,7 +357,7 @@ The deference is use `.setCurlOptionString(CURLOPT_URL, "http://xiaozhuai.github
 
 This just a builder to simplify code. Yes, you can use CXXurl without builder, it's just fine.
 
-```
+```c++
 #include <iostream>
 #include <sstream>
 #include "cxxurl_all.h"
