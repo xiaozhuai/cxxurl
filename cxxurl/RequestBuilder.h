@@ -47,6 +47,8 @@ class RequestBuilder {
 
         RequestBuilder &cacert(string pemFile);
 
+        RequestBuilder &noBody(bool noBody);
+
     public:
         Request &build();
 

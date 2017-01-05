@@ -111,6 +111,11 @@ class Request {
         void setCacert(string pemFile);
         string getCacert();
 
+    public:
+        bool noBody;
+        void setNoBody(bool noBody);
+        bool getNoBody();
+
 
     public:
         CURLcode get();

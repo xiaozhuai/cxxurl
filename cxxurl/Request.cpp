@@ -20,7 +20,8 @@ Request::Request() :
         cookieImportFile(""),
         cookieExportFile(""),
         verifySSL(false),
-        cacert(""){
+        cacert(""),
+        noBody(false) {
 
     userAgent = string("") + "CXXUrl/" + CXX_URL_VERSION + " " + curl_version();
 }
@@ -160,6 +161,14 @@ string Request::getCacert() {
     return cacert;
 }
 
+void Request::setNoBody(bool noBody) {
+    this->noBody = noBody;
+}
+
+bool Request::getNoBody() {
+    return noBody;
+}
+
 CURLcode Request::get() {
     return exec(GET);
 }
@@ -219,6 +228,7 @@ CURLcode Request::exec(METHOD_TYPE method) {
 
     SET_CURL_OPT(CURLOPT_FOLLOWLOCATION, followLocation);
     SET_CURL_OPT(CURLOPT_USERAGENT, userAgent.c_str());
+    SET_CURL_OPT(CURLOPT_NOBODY, noBody);
 
     if(referer!=""){
         SET_CURL_OPT(CURLOPT_REFERER, referer.c_str());

@@ -90,6 +90,11 @@ RequestBuilder& RequestBuilder::cacert(string pemFile) {
     return *this;
 }
 
+RequestBuilder& RequestBuilder::noBody(bool noBody) {
+    request.setNoBody(noBody);
+    return *this;
+}
+
 Request& RequestBuilder::build() {
     return request;
 }
