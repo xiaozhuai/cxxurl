@@ -32,7 +32,6 @@ Request::~Request() {
 
 size_t Request::writeContent(char *buffer, size_t size, size_t count, void *stream) {
     ((ostream *) stream)->write(buffer, size * count);
-//    printf("data recieved: %d,%s\n", size*count, buffer);
     return size * count;
 }
 
@@ -169,6 +168,14 @@ bool Request::getNoBody() {
     return noBody;
 }
 
+void Request::setCurlOptionLong(CURLoption option, long value) {
+    longOptionMap[option] = value;
+}
+
+void Request::setCurlOptionString(CURLoption option, string value) {
+    stringOptionMap[option] = value;
+}
+
 CURLcode Request::get() {
     return exec(GET);
 }
@@ -279,7 +286,15 @@ CURLcode Request::exec(METHOD_TYPE method) {
         SET_CURL_OPT(CURLOPT_HEADERDATA, headerOutput);
     }
 
+    map<CURLoption, long>::iterator itLong;
+    for (itLong = longOptionMap.begin(); itLong != longOptionMap.end(); itLong++) {
+        SET_CURL_OPT(itLong->first, itLong->second);
+    }
 
+    map<CURLoption, string>::iterator itString;
+    for (itString = stringOptionMap.begin(); itString != stringOptionMap.end(); itString++) {
+        SET_CURL_OPT(itString->first, itString->second.c_str());
+    }
 
 
     CURLcode res;

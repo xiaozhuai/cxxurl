@@ -39,6 +39,10 @@ target_link_libraries(example_cookie ${CURL_LIBRARY})
 add_executable(example_response_header example/example_response_header.cpp ${CXXURL_SRC})
 target_link_libraries(example_response_header ${CURL_LIBRARY})
 
+#example_use_curl_option
+add_executable(example_use_curl_option example/example_use_curl_option.cpp ${CXXURL_SRC})
+target_link_libraries(example_use_curl_option ${CURL_LIBRARY})
+
 include_directories(cxxurl ${CURL_INCLUDE_DIR})
 
 

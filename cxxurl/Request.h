@@ -9,6 +9,7 @@
 #include <curl/curl.h>
 #include <string>
 #include <iostream>
+#include <map>
 #include <stdlib.h>
 #include "version.h"
 #include "Form.h"
@@ -115,6 +116,14 @@ class Request {
         bool noBody;
         void setNoBody(bool noBody);
         bool getNoBody();
+
+    public:
+        void setCurlOptionLong(CURLoption option, long value);
+        void setCurlOptionString(CURLoption option, string value);
+
+    public:
+        map<CURLoption, long>   longOptionMap;
+        map<CURLoption, string> stringOptionMap;
 
 
     public:

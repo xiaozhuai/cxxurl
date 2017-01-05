@@ -321,5 +321,38 @@ int main(int argc, char** argv){
 }
 ```
 
+## 原生CURL选项
+
+如果你想要使用原生的CURL选项，看这里
+
+
+```
+#include <iostream>
+#include <sstream>
+#include "cxxurl_all.h"
+
+using namespace std;
+using namespace CXXUrl;
+
+int main(int argc, char** argv){
+    ostringstream contentOutput;
+
+    RequestBuilder builder;
+    builder.setCurlOptionString(CURLOPT_URL, "http://xiaozhuai.github.io")
+            .followLocation(true)
+            .contentOutput(&contentOutput);
+
+    Request& request = builder.build();
+    CURLcode res = request.get();
+
+    cout << "***************** CODE *****************"    << endl << res                  << endl
+         << "***************** CONTENT *****************" << endl << contentOutput.str()  << endl
+         << flush;
+}
+```
+
+这个例子和第一个例子(get)是完全等效的，
+不同之处是使用了 `.setCurlOptionString(CURLOPT_URL, "http://xiaozhuai.github.io")` 来替代 `.url("http://xiaozhuai.github.io")`
+
 # 最后
 感谢cURL

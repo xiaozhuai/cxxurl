@@ -319,5 +319,39 @@ int main(int argc, char** argv){
 }
 ```
 
+## Plain CURL Api
+
+Yes, if you want to use plain CURL api, here CXXurl provide a method.
+
+look this
+
+```
+#include <iostream>
+#include <sstream>
+#include "cxxurl_all.h"
+
+using namespace std;
+using namespace CXXUrl;
+
+int main(int argc, char** argv){
+    ostringstream contentOutput;
+
+    RequestBuilder builder;
+    builder.setCurlOptionString(CURLOPT_URL, "http://xiaozhuai.github.io")
+            .followLocation(true)
+            .contentOutput(&contentOutput);
+
+    Request& request = builder.build();
+    CURLcode res = request.get();
+
+    cout << "***************** CODE *****************"    << endl << res                  << endl
+         << "***************** CONTENT *****************" << endl << contentOutput.str()  << endl
+         << flush;
+}
+```
+
+This example is just the same with simple get example.
+The deference is use `.setCurlOptionString(CURLOPT_URL, "http://xiaozhuai.github.io")` to take place of `.url("http://xiaozhuai.github.io")`
+
 # At last
 Thank cURL

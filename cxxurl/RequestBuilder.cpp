@@ -95,6 +95,16 @@ RequestBuilder& RequestBuilder::noBody(bool noBody) {
     return *this;
 }
 
+RequestBuilder& RequestBuilder::setCurlOptionLong(CURLoption option, long value) {
+    request.setCurlOptionLong(option, value);
+    return *this;
+}
+
+RequestBuilder& RequestBuilder::setCurlOptionString(CURLoption option, string value) {
+    request.setCurlOptionString(option, value);
+    return *this;
+}
+
 Request& RequestBuilder::build() {
     return request;
 }
