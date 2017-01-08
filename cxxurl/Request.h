@@ -28,7 +28,8 @@ class Request {
 
     public:
         enum METHOD_TYPE{
-            GET = 0,
+            NONE = 0,
+            GET = 1,
             POST
         };
 
