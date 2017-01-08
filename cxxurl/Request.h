@@ -118,6 +118,11 @@ class Request {
         bool getNoBody();
 
     public:
+        bool verbose;
+        void setVerbose(bool enable);
+        bool getVerbose();
+
+    public:
         void setCurlOptionLong(CURLoption option, long value);
         void setCurlOptionString(CURLoption option, string value);
 

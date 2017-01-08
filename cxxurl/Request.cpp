@@ -21,7 +21,8 @@ Request::Request() :
         cookieExportFile(""),
         verifySSL(false),
         cacert(""),
-        noBody(false) {
+        noBody(false),
+        verbose(false) {
 
     userAgent = string("") + "CXXUrl/" + CXX_URL_VERSION + " " + curl_version();
 }
@@ -168,6 +169,14 @@ bool Request::getNoBody() {
     return noBody;
 }
 
+void Request::setVerbose(bool enable) {
+    verbose = enable;
+}
+
+bool Request::getVerbose() {
+    return verbose;
+}
+
 void Request::setCurlOptionLong(CURLoption option, long value) {
     longOptionMap[option] = value;
 }
@@ -187,9 +196,9 @@ CURLcode Request::post() {
 CURLcode Request::exec(METHOD_TYPE method) {
     curl = curl_easy_init();
 
-    SET_CURL_OPT(CURLOPT_URL, url.c_str());
-//    SET_CURL_OPT(CURLOPT_VERBOSE, 1);
+    SET_CURL_OPT(CURLOPT_VERBOSE, verbose);
 
+    SET_CURL_OPT(CURLOPT_URL, url.c_str());
 
     switch (method){
         case GET: {
@@ -221,14 +230,14 @@ CURLcode Request::exec(METHOD_TYPE method) {
                         break;
                     }
                     default:
-                        cerr << "form type unknown" << endl;
+                        cerr << "form type unknown" << endl << flush;
                         break;
                 }
             }
             break;
         }
         default:
-            cerr << "unknown method" << endl;
+            cerr << "unknown method" << endl << flush;
     }
 
 

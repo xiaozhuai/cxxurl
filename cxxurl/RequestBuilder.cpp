@@ -95,6 +95,11 @@ RequestBuilder& RequestBuilder::noBody(bool noBody) {
     return *this;
 }
 
+RequestBuilder& RequestBuilder::verbose(bool enable) {
+    request.setVerbose(enable);
+    return *this;
+}
+
 RequestBuilder& RequestBuilder::setCurlOptionLong(CURLoption option, long value) {
     request.setCurlOptionLong(option, value);
     return *this;

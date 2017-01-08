@@ -49,6 +49,8 @@ class RequestBuilder {
 
         RequestBuilder &noBody(bool noBody);
 
+        RequestBuilder &verbose(bool enable);
+
         RequestBuilder &setCurlOptionLong(CURLoption option, long value);
         RequestBuilder &setCurlOptionString(CURLoption option, string value);
 
