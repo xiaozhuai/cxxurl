@@ -135,7 +135,7 @@ class Request {
     public:
         CURLcode get();
         CURLcode post();
-        CURLcode exec(METHOD_TYPE method);
+        CURLcode exec(METHOD_TYPE method = NONE);
 
 };
 

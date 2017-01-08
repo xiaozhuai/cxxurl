@@ -193,7 +193,7 @@ CURLcode Request::post() {
     return exec(POST);
 }
 
-CURLcode Request::exec(METHOD_TYPE method = NONE) {
+CURLcode Request::exec(METHOD_TYPE method) {
     curl = curl_easy_init();
 
     SET_CURL_OPT(CURLOPT_VERBOSE, verbose);
