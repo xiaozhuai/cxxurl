@@ -15,6 +15,7 @@ author: xiaozhuai - [xiaozhuai7@gmail.com](xiaozhuai7@gmail.com)
 ```bash
 $ cd /path/to/cxxurl
 $ mkdir build
+$ cd build
 $ cmake ..
 $ make
 ```

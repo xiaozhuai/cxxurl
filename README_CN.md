@@ -17,6 +17,7 @@ Under [MIT LICENSE](LICENSE.md)
 ```bash
 $ cd /path/to/cxxurl
 $ mkdir build
+$ cd build
 $ cmake ..
 $ make
 ```
