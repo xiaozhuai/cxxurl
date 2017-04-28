@@ -5,6 +5,10 @@ set(CMAKE_CXX_STANDARD 11)
 
 find_package(CURL REQUIRED)
 
+if(!CURL_FOUND)
+    message(FATAL_ERROR  "CURL_NOT_FOUND")
+endif()
+
 include_directories(${libcxxurl_SOURCE_DIR} ${CURL_INCLUDE_DIR})
 
 #example_get

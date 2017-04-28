@@ -10,6 +10,10 @@ set(CMAKE_MACOSX_RPATH 0)
 
 find_package(CURL REQUIRED)
 
+if(!CURL_FOUND)
+    message(FATAL_ERROR  "CURL_NOT_FOUND")
+endif()
+
 include_directories(${CURL_INCLUDE_DIR})
 
 file(GLOB_RECURSE SOURCE_FILES "cxxurl/*.cpp")
