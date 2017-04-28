@@ -179,9 +179,9 @@ int main(int argc, char** argv){
 ```
 
 CXXUrl provide three form type, `SimpleForm`, `MultipartForm` and `RawForm`.
-* SimpleForm ---- just key-values
-* MultipartForm ---- key-values and files
-* RawForm ---- raw data of request body
+* SimpleForm ---- just key-values (x-www-form-urlencoded)
+* MultipartForm ---- key-values and files (multipart form data)
+* RawForm ---- raw data of request body (raw request body)
 
 ## Https
 

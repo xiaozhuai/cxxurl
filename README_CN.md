@@ -181,9 +181,9 @@ int main(int argc, char** argv){
 ```
 
 CXXUrl 提供了三者form类型 `SimpleForm`, `MultipartForm` 和 `RawForm`.
-* SimpleForm ---- 仅仅是键值对
-* MultipartForm ---- 文件和键值对
-* RawForm ---- 二进制数据(request body)
+* SimpleForm ---- 仅仅是键值对 (x-www-form-urlencoded)
+* MultipartForm ---- 文件和键值对 (multipart form data)
+* RawForm ---- 二进制数据 (raw request body)
 
 ## Https
 
