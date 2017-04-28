@@ -20,9 +20,6 @@
 #define EZ_ASSERT_NOT_EQUAL(a, b)                                                                   \
         EZ_ASSERT(((a)!=(b)))
 
-#define EZ_TEST_ALL_PASS()                                                                          \
-        exit(0)
-
 #define EZ_TEST                                                                                     \
         int main()
 
