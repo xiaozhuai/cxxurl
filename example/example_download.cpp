@@ -6,7 +6,7 @@
 #include <iostream>
 #include <sstream>
 #include <fstream>
-#include "cxxurl_all.h"
+#include <cxxurl/cxxurl_all.h>
 
 using namespace std;
 using namespace CXXUrl;

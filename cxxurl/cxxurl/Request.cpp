@@ -24,7 +24,7 @@ Request::Request() :
         noBody(false),
         verbose(false) {
 
-    userAgent = string("") + "CXXUrl/" + CXX_URL_VERSION + " " + curl_version();
+    userAgent = string("") + "CXXUrl/" + to_string(CXX_URL_VERSION) + " " + curl_version();
 }
 
 Request::~Request() {
