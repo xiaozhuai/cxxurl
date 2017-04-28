@@ -1,6 +1,10 @@
-enable_testing()
+find_package(CURL REQUIRED)
+if(!CURL_FOUND)
+    message(FATAL_ERROR  "CURL_NOT_FOUND")
+endif()
+include_directories(${libcxxurl_SOURCE_DIR} ${CURL_INCLUDE_DIR})
 
-include_directories(${libcxxurl_SOURCE_DIR})
+enable_testing()
 
 macro(add_test_target TEST_TARGET TEST_FILE)
     add_executable(${TEST_TARGET} ${TEST_FILE})

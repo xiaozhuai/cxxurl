@@ -27,7 +27,7 @@ $ make
 构建完成后，你就可以运行一些示例了
 
 ```bash
-$ example/example_get
+$ ./example_get
 ```
 
 # 安装

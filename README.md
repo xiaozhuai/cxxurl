@@ -25,7 +25,7 @@ $ make
 Once you have build the project, you can run some examples.
 
 ```bash
-$ example/example_get
+$ ./example_get
 ```
 
 # Install

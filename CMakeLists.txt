@@ -14,7 +14,10 @@ else()
 endif()
 
 add_subdirectory(cxxurl)
-add_subdirectory(example)
+
+# Add all examples target
+include(cmake_example.cmake)
+add_example_directory(examples)
 
 # Add all test target
 include(cmake_test.cmake)
