@@ -19,12 +19,14 @@ MultipartForm::~MultipartForm() {
     if(lastptr!=NULL) curl_formfree(lastptr);
 }
 
-void MultipartForm::add(string key, string value) {
+MultipartForm &MultipartForm::add(string key, string value) {
     formDataValueMap[key] = value;
+    return *this;
 }
 
-void MultipartForm::addFile(string key, string filePath) {
+MultipartForm &MultipartForm::addFile(string key, string filePath) {
     formDataFileMap[key] = filePath;
+    return *this;
 }
 
 struct curl_httppost* MultipartForm::getData() {
@@ -52,6 +54,11 @@ struct curl_httppost* MultipartForm::getData() {
 
     return formpost;
 
+}
+
+void MultipartForm::clear() {
+    formDataValueMap.erase(formDataValueMap.begin(), formDataValueMap.end());
+    formDataFileMap.erase(formDataFileMap.begin(), formDataFileMap.end());
 }
 
 }

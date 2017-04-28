@@ -13,16 +13,21 @@ RawForm::RawForm() :
 
 }
 
-void RawForm::setRawText(string text) {
+RawForm & RawForm::setRawText(string text) {
     this->setRawData(text.data(), text.length());
-
+    return *this;
 }
 
-void RawForm::setRawData(const char *data, size_t len) {
+RawForm & RawForm::setRawData(const char *data, size_t len) {
     if(rawData!=NULL) free(rawData);
     rawData = (char*)malloc(len);
     memcpy(rawData, data, len);
     _len = len;
+    return *this;
+}
+
+void RawForm::clear() {
+    rawData = NULL;
 }
 
 char* RawForm::getData() {

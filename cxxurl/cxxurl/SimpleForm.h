@@ -19,9 +19,10 @@ class SimpleForm : public Form{
         SimpleForm();
 
     public:
-        void add(string key, string value);
+        SimpleForm &add(string key, string value);
         char* getData();
         size_t length();
+        void clear();
 
     protected:
         map<string, string> formDataMap;

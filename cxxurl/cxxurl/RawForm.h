@@ -20,10 +20,11 @@ class RawForm : public Form{
         RawForm();
 
     public:
-        void setRawText(string text);
-        void setRawData(const char* data, size_t len);
+        RawForm &setRawText(string text);
+        RawForm &setRawData(const char* data, size_t len);
         char* getData();
         size_t length();
+        void clear();
 
     protected:
         char* rawData;

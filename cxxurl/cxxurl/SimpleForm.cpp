@@ -18,7 +18,7 @@ char* SimpleForm::getData() {
     for (it = formDataMap.begin(); it != formDataMap.end(); it++) {
         queryStr += "&" + UrlEncode::encode(it->first) + "=" + UrlEncode::encode(it->second);
     }
-    data = UrlEncode::encode(queryStr.substr(1));
+    data = queryStr;
     return (char*)data.data();
 }
 
@@ -26,8 +26,13 @@ size_t SimpleForm::length() {
     return data.length();
 }
 
-void SimpleForm::add(string key, string value) {
+SimpleForm &SimpleForm::add(string key, string value) {
     formDataMap[key] = value;
+    return *this;
+}
+
+void SimpleForm::clear() {
+    formDataMap.erase(formDataMap.begin(), formDataMap.end());
 }
 
 }
