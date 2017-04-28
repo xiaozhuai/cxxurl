@@ -6,45 +6,33 @@ CXXUrl is base on libcurl, but it's not only an object-oriented C++ wrapper for 
 
 By the way, if you want to known more about libcurl, you should go [http://curl.haxx.se/](http://curl.haxx.se/)
 
-Under [MIT LICENSE](LICENSE.md)
+Under [MIT LICENSE](LICENSE)
 
 author: xiaozhuai - [xiaozhuai7@gmail.com](xiaozhuai7@gmail.com)
 
-# Run Example
+# Build
 
 ```bash
 $ cd /path/to/cxxurl
 $ mkdir build
 $ cd build
-$ cmake ..
+$ cmake .. -DCMAKE_BUILD_TYPE = Release # or Debug
 $ make
 ```
 
-Then you can run example, such as 
+# Run Example
+
+Once you have build the project, you can run some examples.
 
 ```bash
-$ ./example_get
+$ example/example_get
 ```
 
+# Install
 
-
-# Compile and Link
-
-It's so easy to use this lib, it's lite and you don't need to compile it to a static or shared library.
-
-All you need to do with cmake just like this:
-
+```bash
+$ make install # or with sudo
 ```
-find_package(CURL REQUIRED)                                    #find curl, of cource, you need curl installed
-set(CXXURL_SRC cxxurl/cxxurl_all.cpp)                          #define the path of cxxurl_all.cpp
-add_executable(target ${CXXURL_SRC} ${ALL_YOUR_SOURCE})        #add cxxurl_all.cpp to your target
-target_link_libraries(target ${CURL_LIBRARY})                  #link curl library
-include_directories(cxxurl ${CURL_INCLUDE_DIR})                #set curl include dir and cxxurl include dir, the "cxxurl" is the dir path of cxxurl_all.h
-```
-
-Easy enough ?
-
-
 
 # Examples & Usages
 
@@ -55,7 +43,7 @@ You can find all example source in example dir.
 ```c++
 #include <iostream>
 #include <sstream>
-#include "cxxurl_all.h"
+#include <cxxurl/cxxurl_all.h>
 
 using namespace std;
 using namespace CXXUrl;
@@ -87,7 +75,7 @@ like this
 #include <iostream>
 #include <sstream>
 #include <fstream>
-#include "cxxurl_all.h"
+#include <cxxurl/cxxurl_all.h>
 
 using namespace std;
 using namespace CXXUrl;
@@ -116,7 +104,7 @@ And if you need header output, just set it
 ```c++
 #include <iostream>
 #include <sstream>
-#include "cxxurl_all.h"
+#include <cxxurl/cxxurl_all.h>
 
 using namespace std;
 using namespace CXXUrl;
@@ -148,7 +136,7 @@ Do a post request maybe something more than get request, but it's still easy
 ```c++
 #include <iostream>
 #include <sstream>
-#include "cxxurl_all.h"
+#include <cxxurl/cxxurl_all.h>
 
 using namespace std;
 using namespace CXXUrl;
@@ -200,7 +188,7 @@ CXXUrl provide three form type, `SimpleForm`, `MultipartForm` and `RawForm`.
 ```c++
 #include <iostream>
 #include <sstream>
-#include "cxxurl_all.h"
+#include <cxxurl/cxxurl_all.h>
 
 using namespace std;
 using namespace CXXUrl;
@@ -233,7 +221,7 @@ Headers usage look like post form
 ```c++
 #include <iostream>
 #include <sstream>
-#include "cxxurl_all.h"
+#include <cxxurl/cxxurl_all.h>
 
 using namespace std;
 using namespace CXXUrl;
@@ -273,7 +261,7 @@ Something like this
 ```c++
 #include <iostream>
 #include <sstream>
-#include "cxxurl_all.h"
+#include <cxxurl/cxxurl_all.h>
 
 using namespace std;
 using namespace CXXUrl;
@@ -329,7 +317,7 @@ look this
 ```c++
 #include <iostream>
 #include <sstream>
-#include "cxxurl_all.h"
+#include <cxxurl/cxxurl_all.h>
 
 using namespace std;
 using namespace CXXUrl;
@@ -361,7 +349,7 @@ This just a builder to simplify code. Yes, you can use CXXurl without builder, i
 ```c++
 #include <iostream>
 #include <sstream>
-#include "cxxurl_all.h"
+#include <cxxurl/cxxurl_all.h>
 
 using namespace std;
 using namespace CXXUrl;

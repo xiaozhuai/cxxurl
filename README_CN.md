@@ -6,11 +6,11 @@ CXXUrl 是基于libcurl的c++库，但它不仅仅只是一个curl的面向对�
 
 如果你想了解更多关于curl的信息，访问 [http://curl.haxx.se/](http://curl.haxx.se/)
 
-Under [MIT LICENSE](LICENSE.md)
+Under [MIT LICENSE](LICENSE)
 
 作者：xiaozhuai - [xiaozhuai7@gmail.com](xiaozhuai7@gmail.com)
 
-# 运行示例
+# 构建
 
 执行下面的命令
 
@@ -18,35 +18,23 @@ Under [MIT LICENSE](LICENSE.md)
 $ cd /path/to/cxxurl
 $ mkdir build
 $ cd build
-$ cmake ..
+$ cmake .. -DCMAKE_BUILD_TYPE = Release # or Debug
 $ make
 ```
 
-然后就可以运行示例了，例如
+# 运行示例
+
+构建完成后，你就可以运行一些示例了
 
 ```bash
-$ ./example_get
+$ example/example_get
 ```
 
+# 安装
 
-
-# 编译和链接
-
-CXXUrl是极其易用的，你甚至不需要把它编译成动态库或者静态库，因为它很轻量，你完全可以把它放到自己的项目中
-
-如果你使用cmake，你需要做的只是
-
+```bash
+$ make install # or with sudo
 ```
-find_package(CURL REQUIRED)                                    #find curl, of cource, you need curl installed
-set(CXXURL_SRC cxxurl/cxxurl_all.cpp)                          #define the path of cxxurl_all.cpp
-add_executable(target ${CXXURL_SRC} ${ALL_YOUR_SOURCE})        #add cxxurl_all.cpp to your target
-target_link_libraries(target ${CURL_LIBRARY})                  #link curl library
-include_directories(cxxurl ${CURL_INCLUDE_DIR})                #set curl include dir and cxxurl include dir, the "cxxurl" is the dir path of cxxurl_all.h
-```
-
-够简单吗？
-
-
 
 # 例子和用法
 
@@ -57,7 +45,7 @@ include_directories(cxxurl ${CURL_INCLUDE_DIR})                #set curl include
 ```c++
 #include <iostream>
 #include <sstream>
-#include "cxxurl_all.h"
+#include <cxxurl/cxxurl_all.h>
 
 using namespace std;
 using namespace CXXUrl;
@@ -89,7 +77,7 @@ int main(int argc, char** argv){
 #include <iostream>
 #include <sstream>
 #include <fstream>
-#include "cxxurl_all.h"
+#include <cxxurl/cxxurl_all.h>
 
 using namespace std;
 using namespace CXXUrl;
@@ -118,7 +106,7 @@ int main(int argc, char** argv){
 ```c++
 #include <iostream>
 #include <sstream>
-#include "cxxurl_all.h"
+#include <cxxurl/cxxurl_all.h>
 
 using namespace std;
 using namespace CXXUrl;
@@ -150,7 +138,7 @@ int main(int argc, char** argv){
 ```c++
 #include <iostream>
 #include <sstream>
-#include "cxxurl_all.h"
+#include <cxxurl/cxxurl_all.h>
 
 using namespace std;
 using namespace CXXUrl;
@@ -202,7 +190,7 @@ CXXUrl 提供了三者form类型 `SimpleForm`, `MultipartForm` 和 `RawForm`.
 ```c++
 #include <iostream>
 #include <sstream>
-#include "cxxurl_all.h"
+#include <cxxurl/cxxurl_all.h>
 
 using namespace std;
 using namespace CXXUrl;
@@ -235,7 +223,7 @@ int main(int argc, char** argv){
 ```c++
 #include <iostream>
 #include <sstream>
-#include "cxxurl_all.h"
+#include <cxxurl/cxxurl_all.h>
 
 using namespace std;
 using namespace CXXUrl;
@@ -275,7 +263,7 @@ int main(int argc, char** argv){
 ```c++
 #include <iostream>
 #include <sstream>
-#include "cxxurl_all.h"
+#include <cxxurl/cxxurl_all.h>
 
 using namespace std;
 using namespace CXXUrl;
@@ -330,7 +318,7 @@ int main(int argc, char** argv){
 ```c++
 #include <iostream>
 #include <sstream>
-#include "cxxurl_all.h"
+#include <cxxurl/cxxurl_all.h>
 
 using namespace std;
 using namespace CXXUrl;
@@ -362,7 +350,7 @@ RequestBuilder正如它的名字，仅仅是个builder，它只是为了简化�
 ```c++
 #include <iostream>
 #include <sstream>
-#include "cxxurl_all.h"
+#include <cxxurl/cxxurl_all.h>
 
 using namespace std;
 using namespace CXXUrl;
