@@ -14,4 +14,5 @@ using namespace CXXUrl;
 
 EZ_TEST{
     ASSERT_URL_ENCODE_EQUAL("aaa", "aaa");
+    ASSERT_URL_ENCODE_EQUAL("阿打算打阿斯蒂芬分隔然后", "%E9%98%BF%E6%89%93%E7%AE%97%E6%89%93%E9%98%BF%E6%96%AF%E8%92%82%E8%8A%AC%E5%88%86%E9%9A%94%E7%84%B6%E5%90%8E");
 }
