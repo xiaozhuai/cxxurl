@@ -16,7 +16,7 @@ char* SimpleForm::getData() {
     string queryStr = "";
     map<string, string>::iterator it;
     for (it = formDataMap.begin(); it != formDataMap.end(); it++) {
-        queryStr += "&" + it->first + "=" + it->second;
+        queryStr += "&" + UrlEncode::encode(it->first) + "=" + UrlEncode::encode(it->second);
     }
     data = UrlEncode::encode(queryStr.substr(1));
     return (char*)data.data();

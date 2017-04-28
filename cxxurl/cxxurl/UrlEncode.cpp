@@ -29,9 +29,7 @@ std::string UrlEncode::encode(const std::string &str) {
             (str[i] == '-') ||
             (str[i] == '_') ||
             (str[i] == '.') ||
-            (str[i] == '~') ||
-            (str[i] == '&') ||
-            (str[i] == '='))
+            (str[i] == '~'))
             strTemp += str[i];
         else if (str[i] == ' ')
             strTemp += "+";
