@@ -46,5 +46,5 @@ SET(CMAKE_INSTALL_PREFIX /usr/local)
 
 file(GLOB_RECURSE HEADER_FILES "cxxurl/*.h")
 
-INSTALL(FILES ${HEADER_FILES} DESTINATION inlcude/cxxurl)
+INSTALL(FILES ${HEADER_FILES} DESTINATION include/cxxurl)
 INSTALL(TARGETS cxxurl_shared cxxurl_static DESTINATION lib)
