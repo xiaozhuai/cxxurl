@@ -36,8 +36,8 @@ std::string UrlEncode::encode(const std::string &str) {
         else
         {
             strTemp += '%';
-            strTemp += ToHex((unsigned char)(str[i] >> 4));
-            strTemp += ToHex((unsigned char)(str[i] % 16));
+            strTemp += ToHex((unsigned char)str[i] >> 4);
+            strTemp += ToHex((unsigned char)str[i] % 16);
         }
     }
     return strTemp;
