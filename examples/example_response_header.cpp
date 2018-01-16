@@ -14,17 +14,19 @@ int main(int argc, char** argv){
     ostringstream headerOutput;
     ostringstream contentOutput;
 
-    RequestBuilder builder;
-    builder.url("http://xiaozhuai.github.io")
+    Request request = RequestBuilder()
+            .url("http://xiaozhuai.github.io")
             .followLocation(true)
             .headerOutput(&headerOutput)
-            .contentOutput(&contentOutput);
-
-    Request& request = builder.build();
+            .contentOutput(&contentOutput)
+            .build();
     CURLcode res = request.get();
 
-    cout << "***************** CODE *****************"    << endl << res                  << endl
-         << "***************** HEADER *****************"  << endl << headerOutput.str()   << endl
-//         << "***************** CONTENT *****************" << endl << contentOutput.str()  << endl
+    cout << "------------ Code ------------" << endl
+         << res << endl
+         << "----------- Header -----------" << endl
+         << headerOutput.str() << endl
+//         << "----------- Content ----------" << endl
+//         << contentOutput.str() << endl
          << flush;
 }

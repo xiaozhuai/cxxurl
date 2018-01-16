@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+cd `dirname $0`
+php -S 0.0.0.0:3000 server.php

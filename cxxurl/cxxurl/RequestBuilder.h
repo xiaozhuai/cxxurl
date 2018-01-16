@@ -33,6 +33,8 @@ class RequestBuilder {
 
         RequestBuilder &referer(string referer);
 
+        RequestBuilder &contentType(string contentType);
+
         RequestBuilder &header(Header *header);
 
         RequestBuilder &timeout(long milliSeconds);
@@ -55,7 +57,7 @@ class RequestBuilder {
         RequestBuilder &setCurlOptionString(CURLoption option, string value);
 
     public:
-        Request &build();
+        Request build();
 
 
     public:

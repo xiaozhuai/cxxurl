@@ -8,12 +8,12 @@
 namespace CXXUrl {
 
 Header::Header() :
-        curlSlist(NULL){
+        curlSlist(nullptr){
 
 }
 
 Header::~Header() {
-    if(curlSlist!=NULL) curl_slist_free_all(curlSlist);
+    if(curlSlist!=nullptr) curl_slist_free_all(curlSlist);
 }
 
 void Header::add(string key, string value) {
@@ -25,10 +25,10 @@ void Header::add(string line) {
 }
 
 struct curl_slist* Header::getHeaders() {
-    if(curlSlist!=NULL) curl_slist_free_all(curlSlist);
+    if(curlSlist!=nullptr) curl_slist_free_all(curlSlist);
 
-    for(int i=0; i<headList.size(); i++){
-        curlSlist = curl_slist_append(curlSlist, headList[i].c_str());
+    for (auto &i : headList) {
+        curlSlist = curl_slist_append(curlSlist, i.c_str());
     }
     return curlSlist;
 }

@@ -17,16 +17,17 @@ int main(int argc, char** argv){
     header.add("name", "xiaozhuai");
     header.add("sex: male");
 
-    RequestBuilder builder;
-    builder.url("http://115.159.31.66/cxxurl/test_header.php")
+    Request request = RequestBuilder()
+            .url("http://localhost:3000/header")
             .followLocation(true)
             .header(&header)
-            .contentOutput(&contentOutput);
-
-    Request& request = builder.build();
+            .contentOutput(&contentOutput)
+            .build();
     CURLcode res = request.get();
 
-    cout << "***************** CODE *****************"    << endl << res                  << endl
-         << "***************** CONTENT *****************" << endl << contentOutput.str()  << endl
+    cout << "------------ Code ------------" << endl
+         << res << endl
+         << "----------- Content ----------" << endl
+         << contentOutput.str() << endl
          << flush;
 }

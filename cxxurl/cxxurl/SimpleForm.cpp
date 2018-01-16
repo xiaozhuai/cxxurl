@@ -13,10 +13,9 @@ SimpleForm::SimpleForm() :
 }
 
 char* SimpleForm::getData() {
-    string queryStr = "";
-    map<string, string>::iterator it;
-    for (it = formDataMap.begin(); it != formDataMap.end(); it++) {
-        queryStr += "&" + UrlEncode::encode(it->first) + "=" + UrlEncode::encode(it->second);
+    string queryStr;
+    for (auto i : formDataMap) {
+        queryStr += "&" + UrlEncode::encode(i.first) + "=" + UrlEncode::encode(i.second);
     }
     data = queryStr.substr(1);
     return (char*)data.data();

@@ -9,7 +9,7 @@ namespace CXXUrl {
 
 RawForm::RawForm() :
         Form(Form::RAW),
-        rawData(NULL) {
+        rawData(nullptr) {
 
 }
 
@@ -19,7 +19,7 @@ RawForm & RawForm::setRawText(string text) {
 }
 
 RawForm & RawForm::setRawData(const char *data, size_t len) {
-    if(rawData!=NULL) free(rawData);
+    if(rawData!=nullptr) free(rawData);
     rawData = (char*)malloc(len);
     memcpy(rawData, data, len);
     _len = len;
@@ -27,7 +27,7 @@ RawForm & RawForm::setRawData(const char *data, size_t len) {
 }
 
 void RawForm::clear() {
-    rawData = NULL;
+    rawData = nullptr;
 }
 
 char* RawForm::getData() {

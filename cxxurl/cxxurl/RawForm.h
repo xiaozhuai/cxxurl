@@ -7,7 +7,7 @@
 #define CXXURL_RAWFORM_H
 
 #include <string>
-#include <string.h>
+#include <cstring>
 #include "Form.h"
 
 namespace CXXUrl {

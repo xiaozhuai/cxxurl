@@ -18,7 +18,6 @@
 #include "RawForm.h"
 #include "Header.h"
 
-#define SET_CURL_OPT(opt,value)          curl_easy_setopt((this->curl),(opt),(value))
 
 namespace CXXUrl {
 
@@ -83,6 +82,11 @@ class Request {
         string getReferer();
 
     public:
+        string contentType;
+        void setContentType(string contentType);
+        string getContentType();
+
+    public:
         Header* header;
         void setHeader(Header* header);
         Header* getHeader();
@@ -128,8 +132,8 @@ class Request {
         void setCurlOptionString(CURLoption option, string value);
 
     public:
-        map<CURLoption, long>   longOptionMap;
-        map<CURLoption, string> stringOptionMap;
+        map<int, long>   longOptionMap;
+        map<int, string> stringOptionMap;
 
 
     public:

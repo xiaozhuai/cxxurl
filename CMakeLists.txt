@@ -16,17 +16,17 @@ endif()
 add_subdirectory(cxxurl)
 
 # Add all examples target
-include(cmake_example.cmake)
+include(cmake/cmake_example.cmake)
 add_example_directory(examples)
 
 # Add all test target
-include(cmake_test.cmake)
+include(cmake/cmake_test.cmake)
 add_test_directory(tests)
 
 # Add check target for ctest with output-on-failure
-include(cmake_check.cmake)
+include(cmake/cmake_check.cmake)
 add_check_target()
 
 # Add uninstall target
-include(cmake_uninstall.cmake)
+include(cmake/cmake_uninstall.cmake)
 add_uninstall_target()

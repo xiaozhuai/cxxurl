@@ -25,6 +25,7 @@ class MultipartForm : public Form {
     public:
         MultipartForm &add(string key, string value);
         MultipartForm &addFile(string key, string filePath);
+        MultipartForm &addFile(string key, string filePath, string fileName);
         struct curl_httppost* getData();
         void clear();
 
@@ -33,6 +34,7 @@ class MultipartForm : public Form {
         struct curl_httppost* lastptr;
         map<string, string> formDataValueMap;
         map<string, string> formDataFileMap;
+        map<string, string> formDataFileNameMap;
 };
 
 }

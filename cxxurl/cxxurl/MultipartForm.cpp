@@ -9,14 +9,13 @@ namespace CXXUrl {
 
 MultipartForm::MultipartForm() :
         Form(Form::MULTIPART),
-        formpost(NULL),
-        lastptr(NULL) {
+        formpost(nullptr),
+        lastptr(nullptr) {
 
 }
 
 MultipartForm::~MultipartForm() {
-    if(formpost!=NULL) curl_formfree(formpost);
-    if(lastptr!=NULL) curl_formfree(lastptr);
+    if(formpost!=nullptr) curl_formfree(formpost);
 }
 
 MultipartForm &MultipartForm::add(string key, string value) {
@@ -29,27 +28,43 @@ MultipartForm &MultipartForm::addFile(string key, string filePath) {
     return *this;
 }
 
+MultipartForm &MultipartForm::addFile(string key, string filePath, string fileName) {
+    formDataFileMap[key] = filePath;
+    formDataFileNameMap[key] = fileName;
+    return *this;
+}
+
 struct curl_httppost* MultipartForm::getData() {
 
-    if(formpost!=NULL) curl_formfree(formpost);
-    if(lastptr!=NULL) curl_formfree(lastptr);
+    if(formpost!=nullptr){
+        curl_formfree(formpost);
+        formpost = nullptr;
+        lastptr = nullptr;
+    }
 
-    map<string, string>::iterator itv;
-    for (itv = formDataValueMap.begin(); itv != formDataValueMap.end(); itv++) {
+    for (auto i : formDataValueMap) {
         curl_formadd(&formpost,
                      &lastptr,
-                     CURLFORM_COPYNAME, itv->first.c_str(),
-                     CURLFORM_COPYCONTENTS, itv->second.c_str(),
+                     CURLFORM_COPYNAME, i.first.c_str(),
+                     CURLFORM_COPYCONTENTS, i.second.c_str(),
                      CURLFORM_END);
     }
 
-    map<string, string>::iterator itf;
-    for (itf = formDataFileMap.begin(); itf != formDataFileMap.end(); itf++) {
-        curl_formadd(&formpost,
-                     &lastptr,
-                     CURLFORM_COPYNAME, itf->first.c_str(),
-                     CURLFORM_FILE, itf->second.c_str(),
-                     CURLFORM_END);
+    for (auto i : formDataFileMap) {
+        if (formDataFileNameMap.find(i.first) == formDataFileNameMap.end()) {
+            curl_formadd(&formpost,
+                         &lastptr,
+                         CURLFORM_COPYNAME, i.first.c_str(),
+                         CURLFORM_FILE, i.second.c_str(),
+                         CURLFORM_END);
+        } else {
+            curl_formadd(&formpost,
+                         &lastptr,
+                         CURLFORM_COPYNAME, i.first.c_str(),
+                         CURLFORM_FILE, i.second.c_str(),
+                         CURLFORM_FILENAME, formDataFileNameMap[i.first].c_str(),
+                         CURLFORM_END);
+        }
     }
 
     return formpost;
@@ -59,6 +74,7 @@ struct curl_httppost* MultipartForm::getData() {
 void MultipartForm::clear() {
     formDataValueMap.erase(formDataValueMap.begin(), formDataValueMap.end());
     formDataFileMap.erase(formDataFileMap.begin(), formDataFileMap.end());
+    formDataFileNameMap.erase(formDataFileNameMap.begin(), formDataFileNameMap.end());
 }
 
 }

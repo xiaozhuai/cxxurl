@@ -14,13 +14,15 @@ int main(int argc, char** argv){
     ostringstream contentOutput;
 
     Request request;
-    request.setUrl("http://xiaozhuai.github.io");
+    request.setUrl("http://localhost:3000/get");
     request.setFollowLocation(true);
     request.setContentOutput(&contentOutput);
 
     CURLcode res = request.get();
 
-    cout << "***************** CODE *****************"    << endl << res                  << endl
-         << "***************** CONTENT *****************" << endl << contentOutput.str()  << endl
+    cout << "------------ Code ------------" << endl
+         << res << endl
+         << "----------- Content ----------" << endl
+         << contentOutput.str() << endl
          << flush;
 }

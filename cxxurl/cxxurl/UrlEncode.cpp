@@ -21,7 +21,7 @@ unsigned char UrlEncode::FromHex(unsigned char x) {
 }
 
 std::string UrlEncode::encode(const std::string &str) {
-    std::string strTemp = "";
+    std::string strTemp;
     size_t length = str.length();
     for (size_t i = 0; i < length; i++)
     {
@@ -36,15 +36,15 @@ std::string UrlEncode::encode(const std::string &str) {
         else
         {
             strTemp += '%';
-            strTemp += ToHex((unsigned char)str[i] >> 4);
-            strTemp += ToHex((unsigned char)str[i] % 16);
+            strTemp += ToHex((unsigned char)(str[i] >> 4));
+            strTemp += ToHex((unsigned char)(str[i] % 16));
         }
     }
     return strTemp;
 }
 
 std::string UrlEncode::decode(const std::string &str) {
-    std::string strTemp = "";
+    std::string strTemp;
     size_t length = str.length();
     for (size_t i = 0; i < length; i++)
     {

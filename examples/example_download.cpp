@@ -14,17 +14,18 @@ using namespace CXXUrl;
 int main(int argc, char** argv){
     ofstream downloadFile("./tao.png");
 
-    RequestBuilder builder;
-    builder.url("http://115.159.31.66/cxxurl/tao.png")
+    Request request = RequestBuilder()
+            .url("http://localhost:3000/download")
             .followLocation(true)
-            .contentOutput(&downloadFile);
-
-    Request& request = builder.build();
+            .contentOutput(&downloadFile)
+            .build();
     CURLcode res = request.get();
 
     downloadFile.flush();
 
-    cout << "***************** CODE *****************"    << endl << res                  << endl
-         << "***************** CONTENT HAS WRITE TO FILE *****************"               << endl
+    cout << "------------ Code ------------" << endl
+         << res << endl
+         << "----------- Content ----------" << endl
+         << "Content has wrote to ./tao.png" << endl
          << flush;
 }

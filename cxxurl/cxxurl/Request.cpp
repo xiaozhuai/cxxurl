@@ -5,26 +5,24 @@
 
 #include "Request.h"
 
+#define SET_CURL_OPT(opt,value)          curl_easy_setopt((this->curl),(CURLoption)(opt),(value))
+
 namespace CXXUrl {
 
 Request::Request() :
         followLocation(true),
-        contentOutput(NULL),
-        headerOutput(NULL),
+        contentOutput(nullptr),
+        headerOutput(nullptr),
         maxRedirs(-1),
-        form(NULL),
-        referer(""),
-        header(NULL),
+        form(nullptr),
+        header(nullptr),
         timeout(0L),
-        proxy(""),
-        cookieImportFile(""),
-        cookieExportFile(""),
         verifySSL(false),
-        cacert(""),
         noBody(false),
         verbose(false) {
-
-    userAgent = string("") + "CXXUrl/" + to_string(CXX_URL_VERSION) + " " + curl_version();
+    string cxxurl_version = to_string(CXX_URL_VERSION);
+    cxxurl_version.erase(cxxurl_version.find_last_not_of("0") + 1);
+    userAgent = string("") + "CXXUrl/" + cxxurl_version + " " + curl_version();
 }
 
 Request::~Request() {
@@ -103,6 +101,14 @@ void Request::setReferer(string referer) {
 
 string Request::getReferer() {
     return referer;
+}
+
+void Request::setContentType(string contentType) {
+    this->contentType = contentType;
+}
+
+string Request::getContentType() {
+    return contentType;
 }
 
 void Request::setHeader(Header *header) {
@@ -207,24 +213,24 @@ CURLcode Request::exec(METHOD_TYPE method) {
         }
         case POST: {
             SET_CURL_OPT(CURLOPT_POST, 1);
-            if (form == NULL) {
+            if (form == nullptr) {
                 SET_CURL_OPT(CURLOPT_POSTFIELDS, "");
                 SET_CURL_OPT(CURLOPT_POSTFIELDSIZE, 0);
             } else {
                 switch (form->type){
                     case Form::SIMPLE: {
-                        SimpleForm *simpleForm = (SimpleForm *) form;
+                        auto *simpleForm = (SimpleForm *) form;
                         SET_CURL_OPT(CURLOPT_POSTFIELDS, simpleForm->getData());
                         SET_CURL_OPT(CURLOPT_POSTFIELDSIZE, simpleForm->length());
                         break;
                     }
                     case Form::MULTIPART: {
-                        MultipartForm *multipartForm = (MultipartForm *) form;
+                        auto *multipartForm = (MultipartForm *) form;
                         SET_CURL_OPT(CURLOPT_HTTPPOST, multipartForm->getData());
                         break;
                     }
                     case Form::RAW: {
-                        RawForm *rawForm = (RawForm *) form;
+                        auto *rawForm = (RawForm *) form;
                         SET_CURL_OPT(CURLOPT_POSTFIELDS, rawForm->getData());
                         SET_CURL_OPT(CURLOPT_POSTFIELDSIZE, rawForm->length());
                         break;
@@ -246,11 +252,19 @@ CURLcode Request::exec(METHOD_TYPE method) {
     SET_CURL_OPT(CURLOPT_USERAGENT, userAgent.c_str());
     SET_CURL_OPT(CURLOPT_NOBODY, noBody);
 
-    if(referer!=""){
+    if(!referer.empty()){
         SET_CURL_OPT(CURLOPT_REFERER, referer.c_str());
     }
 
-    if(header!=NULL){
+    if(!contentType.empty()){
+        if(header==nullptr){
+            Header headerObj;
+            header = &headerObj;
+        }
+        header->add("Content-Type", contentType);
+    }
+
+    if(header!=nullptr){
         SET_CURL_OPT(CURLOPT_HTTPHEADER, header->getHeaders());
     }
 
@@ -259,22 +273,22 @@ CURLcode Request::exec(METHOD_TYPE method) {
     }
 
 
-    if(proxy!=""){
+    if(!proxy.empty()){
         SET_CURL_OPT(CURLOPT_PROXY, proxy.c_str());
     }else{
         char* envProxy = getenv("http_proxy");
-        if(envProxy==NULL) envProxy = getenv("HTTP_PROXY");
-        if(envProxy!=NULL) SET_CURL_OPT(CURLOPT_PROXY, envProxy);
+        if(envProxy==nullptr) envProxy = getenv("HTTP_PROXY");
+        if(envProxy!=nullptr) SET_CURL_OPT(CURLOPT_PROXY, envProxy);
     }
 
-    if(cookieImportFile!=""){
+    if(!cookieImportFile.empty()){
         SET_CURL_OPT(CURLOPT_COOKIEFILE, cookieImportFile.c_str());
     }
-    if(cookieExportFile!=""){
+    if(!cookieExportFile.empty()){
         SET_CURL_OPT(CURLOPT_COOKIEJAR, cookieExportFile.c_str());
     }
 
-    if(verifySSL && cacert!=""){
+    if(verifySSL && !cacert.empty()){
         SET_CURL_OPT(CURLOPT_SSL_VERIFYPEER, 1);
         SET_CURL_OPT(CURLOPT_SSL_VERIFYHOST, 1);
         SET_CURL_OPT(CURLOPT_CAINFO, cacert.c_str());
@@ -286,23 +300,21 @@ CURLcode Request::exec(METHOD_TYPE method) {
     if (maxRedirs != -1)
         SET_CURL_OPT(CURLOPT_MAXREDIRS, maxRedirs);
 
-    if (contentOutput != NULL) {
+    if (contentOutput != nullptr) {
         SET_CURL_OPT(CURLOPT_WRITEFUNCTION, writeContent);
         SET_CURL_OPT(CURLOPT_WRITEDATA, contentOutput);
     }
-    if (headerOutput != NULL) {
+    if (headerOutput != nullptr) {
         SET_CURL_OPT(CURLOPT_HEADERFUNCTION, writeHeader);
         SET_CURL_OPT(CURLOPT_HEADERDATA, headerOutput);
     }
 
-    map<CURLoption, long>::iterator itLong;
-    for (itLong = longOptionMap.begin(); itLong != longOptionMap.end(); itLong++) {
-        SET_CURL_OPT(itLong->first, itLong->second);
+    for (auto i : longOptionMap) {
+        SET_CURL_OPT(i.first, i.second);
     }
 
-    map<CURLoption, string>::iterator itString;
-    for (itString = stringOptionMap.begin(); itString != stringOptionMap.end(); itString++) {
-        SET_CURL_OPT(itString->first, itString->second.c_str());
+    for (auto i : stringOptionMap) {
+        SET_CURL_OPT(i.first, i.second.c_str());
     }
 
 

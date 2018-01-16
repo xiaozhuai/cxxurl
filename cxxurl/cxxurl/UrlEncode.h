@@ -6,7 +6,7 @@
 #ifndef CXXURL_URLENCODE_H
 #define CXXURL_URLENCODE_H
 
-#include <assert.h>
+#include <cassert>
 #include <string>
 
 namespace CXXUrl {

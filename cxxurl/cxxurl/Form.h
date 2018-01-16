@@ -20,7 +20,7 @@ class Form {
         };
 
     public:
-        Form(FORM_TYPE type);
+        explicit Form(FORM_TYPE type);
 
     public:
         FORM_TYPE type;

@@ -10,38 +10,100 @@
 using namespace std;
 using namespace CXXUrl;
 
-int main(int argc, char** argv){
-    ostringstream contentOutput;
+void example_simple_form();
+void example_multipart_form();
+void example_raw_body_text();
+void example_raw_body_binary();
 
-//    simple form, you can only set key-value
+int main(int argc, char** argv){
+    example_simple_form();
+    example_multipart_form();
+    example_raw_body_text();
+    example_raw_body_binary();
+}
+
+void example_simple_form(){
+    ostringstream contentOutput;
+    // simple form, you can only set key-value (x-www-form-urlencoded)
     SimpleForm form;
     form.add("name", "xiaozhuai");
     form.add("sex",  "male");
-
-////    multipart form, you can upload a file, or key-value
-//    MultipartForm multipartForm;
-//    multipartForm.add("name", "xiaozhuai");
-//    multipartForm.addFile("avatar", "./tao.png");
-
-////    raw form, you can set request body with raw text
-//    RawForm rawFormText;
-//    rawFormText.setRawText("{ \"name\": \"xiaozhuai\" }");
-
-////    raw form, you can set request body with raw bytes
-//    char buffer[100];
-//    RawForm rawFormBytes;
-//    rawFormBytes.setRawData(buffer, 100);
-
-    RequestBuilder builder;
-    builder.url("http://115.159.31.66/cxxurl/test_post.php")
+    Request request = RequestBuilder()
+            .url("http://localhost:3000/post")
             .followLocation(true)
             .form(&form)
-            .contentOutput(&contentOutput);
-
-    Request& request = builder.build();
+            .contentOutput(&contentOutput)
+            .build();
     CURLcode res = request.post();
 
-    cout << "***************** CODE *****************"    << endl << res                  << endl
-         << "***************** CONTENT *****************" << endl << contentOutput.str()  << endl
+    cout << "------------ Code ------------" << endl
+         << res << endl
+         << "----------- Content ----------" << endl
+         << contentOutput.str() << endl
+         << flush;
+}
+
+void example_multipart_form(){
+    ostringstream contentOutput;
+    // multipart form, you can upload a file, or key-value
+    MultipartForm form;
+    form.add("name", "xiaozhuai");
+    form.addFile("avatar", "./tao.png");
+    form.addFile("avatar2", "./tao.png", "tao2.png");
+    Request request = RequestBuilder()
+            .url("http://localhost:3000/post")
+            .followLocation(true)
+            .form(&form)
+            .contentOutput(&contentOutput)
+            .build();
+    CURLcode res = request.post();
+
+    cout << "------------ Code ------------" << endl
+         << res << endl
+         << "----------- Content ----------" << endl
+         << contentOutput.str() << endl
+         << flush;
+}
+
+void example_raw_body_text(){
+    ostringstream contentOutput;
+    // raw form, you can set request body with text
+    RawForm form;
+    form.setRawText("{ \"name\": \"xiaozhuai\" }");
+    Request request = RequestBuilder()
+            .url("http://localhost:3000/post")
+            .followLocation(true)
+            .form(&form)
+            .contentType("text/json")
+            .contentOutput(&contentOutput)
+            .build();
+    CURLcode res = request.post();
+
+    cout << "------------ Code ------------" << endl
+         << res << endl
+         << "----------- Content ----------" << endl
+         << contentOutput.str() << endl
+         << flush;
+}
+
+void example_raw_body_binary(){
+    ostringstream contentOutput;
+    // raw form, you can set request body with raw bytes
+    char buffer[100];
+    RawForm form;
+    form.setRawData(buffer, 100);
+    Request request = RequestBuilder()
+            .url("http://localhost:3000/post")
+            .followLocation(true)
+            .form(&form)
+            .contentType("application/octet-stream")
+            .contentOutput(&contentOutput)
+            .build();
+    CURLcode res = request.post();
+
+    cout << "------------ Code ------------" << endl
+         << res << endl
+         << "----------- Content ----------" << endl
+         << contentOutput.str() << endl
          << flush;
 }

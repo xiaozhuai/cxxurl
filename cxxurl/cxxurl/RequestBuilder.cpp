@@ -55,6 +55,11 @@ RequestBuilder& RequestBuilder::referer(string referer) {
     return *this;
 }
 
+RequestBuilder& RequestBuilder::contentType(string contentType) {
+    request.setContentType(contentType);
+    return *this;
+}
+
 RequestBuilder& RequestBuilder::header(Header *header) {
     request.setHeader(header);
     return *this;
@@ -110,7 +115,7 @@ RequestBuilder& RequestBuilder::setCurlOptionString(CURLoption option, string va
     return *this;
 }
 
-Request& RequestBuilder::build() {
+Request RequestBuilder::build() {
     return request;
 }
 

@@ -10,43 +10,51 @@
 using namespace std;
 using namespace CXXUrl;
 
+void login();
+void profile();
+
 int main(int argc, char** argv){
+    login();
+    profile();
+}
+
+void login(){
     ostringstream contentOutput;
 
     SimpleForm form;
     form.add("name", "xiaozhuai");
 
 
-    RequestBuilder builder;
-    builder.url("http://115.159.31.66/cxxurl/test_cookie_login.php")
+    Request request = RequestBuilder()
+            .url("http://localhost:3000/cookie/login")
             .followLocation(true)
             .form(&form)
             .exportCookie("./cookie.txt")
-            .contentOutput(&contentOutput);
-
-    Request& request = builder.build();
+            .contentOutput(&contentOutput)
+            .build();
     CURLcode res = request.post();
 
-    cout << "***************** CODE *****************"    << endl << res                  << endl
-         << "***************** CONTENT *****************" << endl << contentOutput.str()  << endl
+    cout << "------------ Code ------------" << endl
+         << res << endl
+         << "----------- Content ----------" << endl
+         << contentOutput.str() << endl
          << flush;
+}
 
+void profile(){
+    ostringstream contentOutput;
 
-
-    ostringstream contentOutput2;
-
-    RequestBuilder builder2;
-    builder2.url("http://115.159.31.66/cxxurl/test_cookie_welcome.php")
+    Request request = RequestBuilder()
+            .url("http://localhost:3000/cookie/profile")
             .followLocation(true)
             .importCookie("./cookie.txt")
-            .contentOutput(&contentOutput2);
+            .contentOutput(&contentOutput)
+            .build();
+    CURLcode res = request.get();
 
-    Request& request2 = builder2.build();
-    CURLcode res2 = request2.get();
-
-    cout << "***************** CODE *****************"    << endl << res2                 << endl
-         << "***************** CONTENT *****************" << endl << contentOutput2.str() << endl
+    cout << "------------ Code ------------" << endl
+         << res << endl
+         << "----------- Content ----------" << endl
+         << contentOutput.str() << endl
          << flush;
-
-
 }

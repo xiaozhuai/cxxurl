@@ -13,16 +13,17 @@ using namespace CXXUrl;
 int main(int argc, char** argv){
     ostringstream contentOutput;
 
-    RequestBuilder builder;
-    builder.url("https://github.com/xiaozhuai/cxxurl")
+    Request request = RequestBuilder()
+            .url("https://github.com/xiaozhuai/cxxurl")
             .followLocation(true)
             .verifySSL(false)
-            .contentOutput(&contentOutput);
-
-    Request& request = builder.build();
+            .contentOutput(&contentOutput)
+            .build();
     CURLcode res = request.get();
 
-    cout << "***************** CODE *****************"    << endl << res                  << endl
-         << "***************** CONTENT *****************" << endl << contentOutput.str()  << endl
+    cout << "------------ Code ------------" << endl
+         << res << endl
+         << "----------- Content ----------" << endl
+         << contentOutput.str() << endl
          << flush;
 }
