@@ -16,7 +16,7 @@ author: xiaozhuai - [xiaozhuai7@gmail.com](xiaozhuai7@gmail.com)
 $ cd /path/to/cxxurl
 $ mkdir build
 $ cd build
-$ cmake .. -DCMAKE_BUILD_TYPE = Release # or Debug
+$ cmake .. -DCMAKE_BUILD_TYPE=Release # or Debug
 $ make
 ```
 
