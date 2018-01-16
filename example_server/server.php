@@ -103,13 +103,21 @@ $reflector = new ReflectionClass('Controller');
 $controller = new Controller();
 if ($reflector->hasMethod($action)) {
     $method = $reflector->getMethod($action);
-    if ($method->isPublic() && !$method->isAbstract()) {
-        $method->invoke($controller);
+    if ($method->isPublic()) {
+        if($method->isAbstract()){
+            http_response_code(501);
+            header("Content-Type: text/plain");
+            echo "Not Implemented";
+        }else{
+            $method->invoke($controller);
+        }
     } else {
         http_response_code(403);
-        echo "Forbidden or not implemented";
+        header("Content-Type: text/plain");
+        echo "Forbidden";
     }
 } else {
     http_response_code(404);
-    echo "Not found";
+    header("Content-Type: text/plain");
+    echo "Not Found";
 }
