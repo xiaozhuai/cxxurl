@@ -11,7 +11,7 @@ using namespace CXXUrl;
 #define ASSERT_SIMPLE_FORM(a, b)        do{             \
     EZ_ASSERT_EQUAL(string((a).getData()), string(b));  \
     (a).clear();                                        \
-}while(0)                                               \
+}while(0)
 
 EZ_TEST {
     SimpleForm simpleForm;

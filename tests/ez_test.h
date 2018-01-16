@@ -57,6 +57,6 @@ int main(){                             \
     __run_tests__();                    \
     return __hasErr__ ? 1 : 0;          \
 }                                       \
-void __run_tests__()                    \
+void __run_tests__()
 
 #endif //EZ_TEST_H
