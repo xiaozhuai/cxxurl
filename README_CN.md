@@ -55,6 +55,15 @@ See [examples/example_download.cpp](examples/example_download.cpp)
 
 See [examples/example_response_header.cpp](examples/example_response_header.cpp)
 
+当然，我们还提供了一个解析器
+
+See [examples/example_parse_response_header.cpp](examples/example_parse_response_header.cpp)
+
+至于body的解析，由于body种类太多，我们不提供任何的body解析器，
+请参考header解析器的实现，见 [cxxurl/cxxurl/ParseableOutputStringStream.h](cxxurl/cxxurl/ParseableOutputStringStream.h)
+和 [cxxurl/cxxurl/HeaderParserStream.h](cxxurl/cxxurl/HeaderParserStream.h)
+来自行实现body解析器。
+
 ## Post
 
 发起一个post请求或许比get要复杂一些，但仍然是一件非常简单的事情

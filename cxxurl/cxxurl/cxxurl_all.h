@@ -15,5 +15,8 @@
 #include "SimpleForm.h"
 #include "UrlEncode.h"
 #include "Version.h"
+#include "ParseableOutputStringStream.h"
+#include "StringUtils.h"
+#include "HeaderParserStream.h"
 
 #endif //CXXURL_CXXURL_ALL_H

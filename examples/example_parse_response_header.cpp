@@ -11,7 +11,7 @@ using namespace std;
 using namespace CXXUrl;
 
 int main(int argc, char** argv){
-    ostringstream headerOutput;
+    HeaderParserStream headerOutput;
     ostringstream contentOutput;
 
     Request request = RequestBuilder()
@@ -22,10 +22,14 @@ int main(int argc, char** argv){
             .build();
     CURLcode res = request.get();
 
+    headerOutput.parse();
+
     cout << "------------ Code ------------" << endl
          << res << endl
-         << "----------- Header -----------" << endl
-         << headerOutput.str() << endl
+         << "---------- HTTP Code ---------" << endl
+         << headerOutput.code << endl
+         << "-------- Header Parsed -------" << endl
+         << headerOutput.dump() << endl
 //         << "----------- Content ----------" << endl
 //         << contentOutput.str() << endl
          << flush;

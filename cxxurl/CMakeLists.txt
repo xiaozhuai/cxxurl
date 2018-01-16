@@ -3,7 +3,7 @@ project(libcxxurl)
 
 set(CMAKE_CXX_STANDARD 11)
 
-set(LIBCXXURL_VERSION 0.4)
+set(LIBCXXURL_VERSION 0.5)
 set(LIBCXXURL_SO_VERSION 0)
 
 set(CMAKE_MACOSX_RPATH 0)
@@ -17,9 +17,10 @@ endif()
 include_directories(${CURL_INCLUDE_DIR})
 
 file(GLOB_RECURSE SOURCE_FILES "cxxurl/*.cpp")
+file(GLOB_RECURSE HEADER_FILES "cxxurl/*.h")
 
-add_library(cxxurl_static STATIC ${SOURCE_FILES})
-add_library(cxxurl_shared SHARED ${SOURCE_FILES})
+add_library(cxxurl_static STATIC ${SOURCE_FILES} ${HEADER_FILES})
+add_library(cxxurl_shared SHARED ${SOURCE_FILES} ${HEADER_FILES})
 
 set_target_properties(cxxurl_static PROPERTIES OUTPUT_NAME cxxurl)
 set_target_properties(cxxurl_shared PROPERTIES OUTPUT_NAME cxxurl)
@@ -43,8 +44,6 @@ target_link_libraries(cxxurl_static ${CURL_LIBRARY})
 target_link_libraries(cxxurl_shared ${CURL_LIBRARY})
 
 SET(CMAKE_INSTALL_PREFIX /usr/local)
-
-file(GLOB_RECURSE HEADER_FILES "cxxurl/*.h")
 
 INSTALL(FILES ${HEADER_FILES} DESTINATION include/cxxurl)
 INSTALL(TARGETS cxxurl_shared cxxurl_static DESTINATION lib)

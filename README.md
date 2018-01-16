@@ -53,6 +53,15 @@ And if you need header output, just set it
 
 See [examples/example_response_header.cpp](examples/example_response_header.cpp)
 
+Of course, we also provide a parser
+
+See [examples/example_parse_response_header.cpp](examples/example_parse_response_header.cpp)
+
+As for the body parser, we do not provide any body parser because there are too many kinds of body.
+Please see [cxxurl/cxxurl/ParseableOutputStringStream.h](cxxurl/cxxurl/ParseableOutputStringStream.h)
+and [cxxurl/cxxurl/HeaderParserStream.h](cxxurl/cxxurl/HeaderParserStream.h)
+to find how to implement a body parse.
+
 ## Post
 
 Do a post request maybe something more than get request, but it's still easy
