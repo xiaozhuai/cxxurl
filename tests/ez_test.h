@@ -31,12 +31,32 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#define EZ_ASSERT(X)                    if(!(X)) {                                                      \
-                                            printf("EZTest Failed %s:%d %s\n", __FILE__, __LINE__, #X); \
-                                            exit(1);                                                    \
-                                        }
+#include <stdbool.h>
+
+#define EZ_ASSERT(X)                    do{                                                         \
+    __caseCount__ ++;                                                                               \
+    if(!(X)) {                                                                                      \
+        fprintf(stderr, "[%d] EZTest Failed %s:%d %s\n", __caseCount__, __FILE__, __LINE__, #X);    \
+        fflush(stderr);                                                                             \
+        __hasErr__ = true;                                                                          \
+    }else{                                                                                          \
+        fprintf(stdout, "[%d] Passed\n", __caseCount__);                                            \
+        fflush(stdout);                                                                             \
+    }                                                                                               \
+}while(0)
+
 #define EZ_ASSERT_EQUAL(a, b)           EZ_ASSERT((a)==(b))
+
 #define EZ_ASSERT_NOT_EQUAL(a, b)       EZ_ASSERT((a)!=(b))
-#define EZ_TEST                         int main()
+
+#define EZ_TEST                         \
+bool __hasErr__ = false;                \
+int __caseCount__=0;                    \
+void __run_tests__();                   \
+int main(){                             \
+    __run_tests__();                    \
+    return __hasErr__ ? 1 : 0;          \
+}                                       \
+void __run_tests__()                    \
 
 #endif //EZ_TEST_H
