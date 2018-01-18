@@ -17,8 +17,8 @@ void example_raw_body_binary();
 
 int main(int argc, char** argv){
     example_simple_form();
-    example_multipart_form();
-    example_raw_body_text();
+//    example_multipart_form();
+//    example_raw_body_text();
     example_raw_body_binary();
 }
 

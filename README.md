@@ -4,6 +4,8 @@
 
 CXXUrl is base on libcurl, but it's not only an object-oriented C++ wrapper for cURL.
 
+Now, CXXUrl is header-only!
+
 By the way, if you want to known more about libcurl, you should go [http://curl.haxx.se/](http://curl.haxx.se/)
 
 Under [MIT LICENSE](LICENSE)
@@ -12,11 +14,25 @@ author: xiaozhuai - [xiaozhuai7@gmail.com](xiaozhuai7@gmail.com)
 
 # Build
 
+First, clone with submodule
+```bash
+$ git clone --recursive https://github.com/xiaozhuai/cxxurl
+```
+
+If you already clone it, but without submodules, you can do this
+
+```bash
+$ cd /path/to/cxxurl
+$ git submodule update --init --recursive
+```
+
+Now, build examples and tests with cmake
+
 ```bash
 $ cd /path/to/cxxurl
 $ mkdir build
 $ cd build
-$ cmake .. -DCMAKE_BUILD_TYPE=Release # or Debug
+$ cmake ..
 $ make
 ```
 
@@ -31,9 +47,7 @@ $ ./example_get
 
 # Install
 
-```bash
-$ make install # or with sudo
-```
+Just drop files in `src/cxxurl` to where you like!
 
 # Examples & Usages
 
@@ -105,7 +119,7 @@ Yes, if you want to use plain CURL api, here CXXurl provide a method.
 See [examples/example_use_curl_option.cpp](examples/example_use_curl_option.cpp)
 
 This example is just the same with simple get example.
-The deference is use `.setCurlOptionString(CURLOPT_URL, "http://xiaozhuai.github.io")` to take place of `.url("http://xiaozhuai.github.io")`
+The deference is use `.curlOptionString(CURLOPT_URL, "http://xiaozhuai.github.io")` to take place of `.url("http://xiaozhuai.github.io")`
 
 ## RequestBuilder
 

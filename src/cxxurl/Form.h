@@ -20,10 +20,10 @@ class Form {
         };
 
     public:
-        explicit Form(FORM_TYPE type);
+        explicit Form(FORM_TYPE type) : m_Type(type) { }
 
     public:
-        FORM_TYPE type;
+        FORM_TYPE m_Type;
 
 };
 

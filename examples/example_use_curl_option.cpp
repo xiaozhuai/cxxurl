@@ -14,7 +14,7 @@ int main(int argc, char** argv){
     ostringstream contentOutput;
 
     Request request = RequestBuilder()
-            .setCurlOptionString(CURLOPT_URL, "http://localhost:3000/get")
+            .curlOptionString(CURLOPT_URL, "http://localhost:3000/get")
             .followLocation(true)
             .contentOutput(&contentOutput)
             .build();

@@ -3,9 +3,25 @@
  * @date   : 17/1/3
  */
 
-#include "UrlEncode.h"
+#ifndef CXXURL_URLENCODE_H
+#define CXXURL_URLENCODE_H
+
+#include <cassert>
+#include <string>
 
 namespace CXXUrl {
+
+class UrlEncode {
+
+    protected:
+        static inline unsigned char ToHex(unsigned char x);
+        static inline unsigned char FromHex(unsigned char x);
+
+    public:
+        static std::string encode(const std::string& str);
+        static std::string decode(const std::string& str);
+
+};
 
 unsigned char UrlEncode::ToHex(unsigned char x) {
     return  x > 9 ? x + 55 : x + 48;
@@ -62,3 +78,6 @@ std::string UrlEncode::decode(const std::string &str) {
 }
 
 }
+
+
+#endif //CXXURL_URLENCODE_H

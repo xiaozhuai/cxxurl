@@ -2,11 +2,10 @@ find_package(CURL REQUIRED)
 if(!CURL_FOUND)
     message(FATAL_ERROR  "CURL_NOT_FOUND")
 endif()
-include_directories(${libcxxurl_SOURCE_DIR} ${CURL_INCLUDE_DIR})
 
 macro(add_example_target EXAMPLE_TARGET EXAMPLE_FILE)
     add_executable(${EXAMPLE_TARGET} ${EXAMPLE_FILE})
-    target_link_libraries(${EXAMPLE_TARGET} cxxurl_shared ${CURL_LIBRARY})
+    target_link_libraries(${EXAMPLE_TARGET} ${CURL_LIBRARY})
 endmacro(add_example_target)
 
 macro(add_example_directory EXAMPLE_DIRECTORY)

@@ -4,6 +4,8 @@
 
 CXXUrl 是基于libcurl的c++库，但它不仅仅只是一个curl的面向对象的c++封装
 
+最新版本的CXXUrl将只包含头文件
+
 如果你想了解更多关于curl的信息，访问 [http://curl.haxx.se/](http://curl.haxx.se/)
 
 Under [MIT LICENSE](LICENSE)
@@ -12,13 +14,25 @@ Under [MIT LICENSE](LICENSE)
 
 # 构建
 
-执行下面的命令
+首先，克隆项目(包含子模块)
+```bash
+$ git clone --recursive https://github.com/xiaozhuai/cxxurl
+```
+
+如果你已经克隆了项目，但是没有初始化子模块，你可以这样
+
+```bash
+$ cd /path/to/cxxurl
+$ git submodule update --init --recursive
+```
+
+现在可以使用cmake来构建了
 
 ```bash
 $ cd /path/to/cxxurl
 $ mkdir build
 $ cd build
-$ cmake .. -DCMAKE_BUILD_TYPE=Release # or Debug
+$ cmake ..
 $ make
 ```
 
@@ -33,9 +47,7 @@ $ ./example_get
 
 # 安装
 
-```bash
-$ make install # or with sudo
-```
+直接将 `src/cxxurl` 中的文件复制到你需要的地方！
 
 # 例子和用法
 
@@ -108,7 +120,7 @@ See [examples/example_cookie.cpp](examples/example_cookie.cpp)
 See [examples/example_use_curl_option.cpp](examples/example_use_curl_option.cpp)
 
 这个例子和第一个例子(get)是完全等效的，
-不同之处是使用了 `.setCurlOptionString(CURLOPT_URL, "http://xiaozhuai.github.io")` 来替代 `.url("http://xiaozhuai.github.io")`
+不同之处是使用了 `.curlOptionString(CURLOPT_URL, "http://xiaozhuai.github.io")` 来替代 `.url("http://xiaozhuai.github.io")`
 
 ## RequestBuilder
 

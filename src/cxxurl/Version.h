@@ -6,8 +6,6 @@
 #define CXXURL_VERSION_H
 
 
-extern const float CXX_URL_VERSION;
-extern const int CXX_URL_SO_VERSION;
-
+const static float CXX_URL_VERSION = 1.0;
 
 #endif //CXXURL_VERSION_H
