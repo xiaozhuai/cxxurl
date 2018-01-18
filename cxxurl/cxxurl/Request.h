@@ -24,17 +24,9 @@ namespace CXXUrl {
 using namespace std;
 
 class Request {
-
-    public:
-        enum METHOD_TYPE{
-            NONE = 0,
-            GET = 1,
-            POST
-        };
-
     public:
         Request();
-        ~Request();
+        ~Request() = default;
 
     protected:
         CURL* curl;
@@ -137,10 +129,17 @@ class Request {
 
 
     public:
-        CURLcode get();
-        CURLcode post();
-        CURLcode exec(METHOD_TYPE method = NONE);
+        #define DEFINE_METHOD(func_name, method) CURLcode func_name(){ return exec(method); }
 
+        DEFINE_METHOD(get,      "GET")
+        DEFINE_METHOD(post,     "POST")
+        DEFINE_METHOD(put,      "PUT")
+        DEFINE_METHOD(head,     "HEAD")
+        DEFINE_METHOD(options,  "OPTIONS")
+        DEFINE_METHOD(del,      "DELETE")
+        DEFINE_METHOD(connect,  "CONNECT")
+
+        CURLcode exec(string method="");
 };
 
 }

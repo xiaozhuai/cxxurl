@@ -51,6 +51,12 @@ class Controller
         ]);
     }
 
+    public function method()
+    {
+        $this->contentType('text/plain');
+        echo "You request with ".$_SERVER['REQUEST_METHOD']." method";
+    }
+
     public function post(){
         $this->contentType('text/plain');
         $contentType = trim(explode(';', $_SERVER['HTTP_CONTENT_TYPE'])[0]);

@@ -41,8 +41,8 @@ class StringUtils {
             }
             string result = text;
             string::size_type index = result.find(search, 0);
-            int searchLength = search.length();
-            int replaceLength = replace.length();
+            string::size_type searchLength = search.length();
+            string::size_type replaceLength = replace.length();
 
             while (string::npos != index) {
                 result.replace(index, searchLength, replace);
@@ -67,21 +67,31 @@ class StringUtils {
             return str;
         }
 
+        static string tolower(string str){
+            std::transform(str.begin(), str.end(), str.begin(), ::tolower);
+            return str;
+        }
+
+        static string toupper(string str){
+            std::transform(str.begin(), str.end(), str.begin(), ::toupper);
+            return str;
+        }
+
     private:
-        StringUtils() {}
+        StringUtils() = default;
 
         static string::size_type getDelimiterIndex(string &text, string &delimiter, string &escape, string::size_type searchFrom) {
             if (escape.length() == 0) {
                 return (int) text.find(delimiter, searchFrom);
             } else {
                 while (searchFrom < text.length()) {
-                    int draft = (int) text.find(delimiter, searchFrom);
+                    string::size_type draft = text.find(delimiter, searchFrom);
                     if (draft == string::npos) {
                         return string::npos;
                     }
-                    int expectedEscapeIndex = draft - escape.length();
+                    auto expectedEscapeIndex = (long)(draft - escape.length());
                     if (0 <= expectedEscapeIndex) {
-                        if (text.substr(expectedEscapeIndex, escape.length()) == escape) {
+                        if (text.substr((string::size_type)expectedEscapeIndex, escape.length()) == escape) {
                             searchFrom = draft + 1;
                         } else {
                             return draft;

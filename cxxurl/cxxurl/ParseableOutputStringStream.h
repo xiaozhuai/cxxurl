@@ -15,9 +15,9 @@ namespace CXXUrl {
 
 class ParseableOutputStringStream : public ostringstream {
     public:
-        ParseableOutputStringStream() {};
+        ParseableOutputStringStream() = default;
 
-        virtual ~ParseableOutputStringStream() {};
+        ~ParseableOutputStringStream() override = default;
 
         bool parse() {
             this->flush();

@@ -4,8 +4,7 @@
  */
 
 #include "Request.h"
-
-#define SET_CURL_OPT(opt,value)          curl_easy_setopt((this->curl),(CURLoption)(opt),(value))
+#include "StringUtils.h"
 
 namespace CXXUrl {
 
@@ -20,22 +19,18 @@ Request::Request() :
         verifySSL(false),
         noBody(false),
         verbose(false) {
-    string cxxurl_version = to_string(CXX_URL_VERSION);
-    cxxurl_version.erase(cxxurl_version.find_last_not_of("0") + 1);
-    userAgent = string("") + "CXXUrl/" + cxxurl_version + " " + curl_version();
-}
-
-Request::~Request() {
-
+    userAgent = string("") + "CXXUrl/" + StringUtils::rtrim(to_string(CXX_URL_VERSION), "0") + " " + curl_version();
 }
 
 size_t Request::writeContent(char *buffer, size_t size, size_t count, void *stream) {
-    ((ostream *) stream)->write(buffer, size * count);
+    if(stream!= nullptr)
+        ((ostream *) stream)->write(buffer, size * count);
     return size * count;
 }
 
 size_t Request::writeHeader(char *buffer, size_t size, size_t count, void *stream) {
-    ((ostream *) stream)->write(buffer, size * count);
+    if(stream!= nullptr)
+        ((ostream *) stream)->write(buffer, size * count);
     return size * count;
 }
 
@@ -191,81 +186,71 @@ void Request::setCurlOptionString(CURLoption option, string value) {
     stringOptionMap[option] = value;
 }
 
-CURLcode Request::get() {
-    return exec(GET);
-}
-
-CURLcode Request::post() {
-    return exec(POST);
-}
-
-CURLcode Request::exec(METHOD_TYPE method) {
+CURLcode Request::exec(string method) {
     curl = curl_easy_init();
+
+    #define SET_CURL_OPT(opt,value)          curl_easy_setopt((this->curl),(CURLoption)(opt),(value))
+
 
     SET_CURL_OPT(CURLOPT_VERBOSE, verbose);
 
     SET_CURL_OPT(CURLOPT_URL, url.c_str());
 
-    switch (method){
-        case GET: {
-            SET_CURL_OPT(CURLOPT_HTTPGET, 1);
-            break;
-        }
-        case POST: {
-            SET_CURL_OPT(CURLOPT_POST, 1);
-            if (form == nullptr) {
-                SET_CURL_OPT(CURLOPT_POSTFIELDS, "");
-                SET_CURL_OPT(CURLOPT_POSTFIELDSIZE, 0);
-            } else {
-                switch (form->type){
-                    case Form::SIMPLE: {
-                        auto *simpleForm = (SimpleForm *) form;
-                        SET_CURL_OPT(CURLOPT_POSTFIELDS, simpleForm->getData());
-                        SET_CURL_OPT(CURLOPT_POSTFIELDSIZE, simpleForm->length());
-                        break;
-                    }
-                    case Form::MULTIPART: {
-                        auto *multipartForm = (MultipartForm *) form;
-                        SET_CURL_OPT(CURLOPT_HTTPPOST, multipartForm->getData());
-                        break;
-                    }
-                    case Form::RAW: {
-                        auto *rawForm = (RawForm *) form;
-                        SET_CURL_OPT(CURLOPT_POSTFIELDS, rawForm->getData());
-                        SET_CURL_OPT(CURLOPT_POSTFIELDSIZE, rawForm->length());
-                        break;
-                    }
-                    default:
-                        cerr << "form type unknown" << endl << flush;
-                        break;
-                }
+    method = StringUtils::toupper(method);
+    if(noBody || (method == "HEAD"))
+        SET_CURL_OPT(CURLOPT_NOBODY, 1);
+    if(method!="HEAD")
+        SET_CURL_OPT(CURLOPT_CUSTOMREQUEST, method.c_str());
+
+    if (form != nullptr) {
+        switch (form->type){
+            case Form::SIMPLE: {
+                auto *simpleForm = (SimpleForm *) form;
+                SET_CURL_OPT(CURLOPT_POSTFIELDS, simpleForm->getData());
+                SET_CURL_OPT(CURLOPT_POSTFIELDSIZE, simpleForm->length());
+                break;
             }
-            break;
+            case Form::MULTIPART: {
+                auto *multipartForm = (MultipartForm *) form;
+                SET_CURL_OPT(CURLOPT_HTTPPOST, multipartForm->getData());
+                break;
+            }
+            case Form::RAW: {
+                auto *rawForm = (RawForm *) form;
+                SET_CURL_OPT(CURLOPT_POSTFIELDS, rawForm->getData());
+                SET_CURL_OPT(CURLOPT_POSTFIELDSIZE, rawForm->length());
+                break;
+            }
+            default:
+                cerr << "form type unknown" << endl << flush;
+                break;
         }
-        default:
-            break;
     }
 
 
 
     SET_CURL_OPT(CURLOPT_FOLLOWLOCATION, followLocation);
     SET_CURL_OPT(CURLOPT_USERAGENT, userAgent.c_str());
-    SET_CURL_OPT(CURLOPT_NOBODY, (contentOutput == nullptr) || noBody);
 
     if(!referer.empty()){
         SET_CURL_OPT(CURLOPT_REFERER, referer.c_str());
     }
 
+    bool need_reset_header = false;
     if(!contentType.empty()){
         if(header==nullptr){
-            Header headerObj;
-            header = &headerObj;
+            header = new Header();
+            need_reset_header = true;
         }
         header->add("Content-Type", contentType);
     }
 
     if(header!=nullptr){
         SET_CURL_OPT(CURLOPT_HTTPHEADER, header->getHeaders());
+        if(need_reset_header) {
+            delete header;
+            header = nullptr;
+        }
     }
 
     if(timeout>0L){
@@ -300,14 +285,10 @@ CURLcode Request::exec(METHOD_TYPE method) {
     if (maxRedirs != -1)
         SET_CURL_OPT(CURLOPT_MAXREDIRS, maxRedirs);
 
-    if (contentOutput != nullptr) {
-        SET_CURL_OPT(CURLOPT_WRITEFUNCTION, writeContent);
-        SET_CURL_OPT(CURLOPT_WRITEDATA, contentOutput);
-    }
-    if (headerOutput != nullptr) {
-        SET_CURL_OPT(CURLOPT_HEADERFUNCTION, writeHeader);
-        SET_CURL_OPT(CURLOPT_HEADERDATA, headerOutput);
-    }
+    SET_CURL_OPT(CURLOPT_WRITEFUNCTION, writeContent);
+    SET_CURL_OPT(CURLOPT_WRITEDATA, contentOutput);
+    SET_CURL_OPT(CURLOPT_HEADERFUNCTION, writeHeader);
+    SET_CURL_OPT(CURLOPT_HEADERDATA, headerOutput);
 
     for (auto i : longOptionMap) {
         SET_CURL_OPT(i.first, i.second);
