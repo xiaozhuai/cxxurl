@@ -17,7 +17,7 @@ endif()
 include_directories(${CURL_INCLUDE_DIR})
 
 file(GLOB_RECURSE SOURCE_FILES "cxxurl/*.cpp")
-file(GLOB_RECURSE HEADER_FILES "cxxurl/*.h")
+file(GLOB_RECURSE HEADER_FILES "cxxurl/*.h" "cxxurl/*.hpp")
 
 add_library(cxxurl_static STATIC ${SOURCE_FILES} ${HEADER_FILES})
 add_library(cxxurl_shared SHARED ${SOURCE_FILES} ${HEADER_FILES})

@@ -41,6 +41,16 @@ class Controller
         echo file_get_contents(__DIR__ . '/tao.png');
     }
 
+    public function json()
+    {
+        $this->contentType('application/json');
+        echo json_encode([
+            'project' => 'cxxurl',
+            'author' => 'xiaozhuai',
+            'repos' => 'https://github.com/xiaozhuai/cxxurl'
+        ]);
+    }
+
     public function post(){
         $this->contentType('text/plain');
         $contentType = trim(explode(';', $_SERVER['HTTP_CONTENT_TYPE'])[0]);

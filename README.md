@@ -45,6 +45,12 @@ See [examples/example_get.cpp](examples/example_get.cpp)
 
 That's all you need to perform a get request.
 
+And you can parse body, we provide a json parser.
+
+See [examples/example_parse_json_body.cpp](examples/example_parse_json_body.cpp)
+
+Thank [https://github.com/nlohmann/json](https://github.com/nlohmann/json), a modern json parser for c++.
+
 You can simplely download a file just change the `contentOutput` to a `ofstream` instance.
 
 See [examples/example_download.cpp](examples/example_download.cpp)
@@ -56,11 +62,6 @@ See [examples/example_response_header.cpp](examples/example_response_header.cpp)
 Of course, we also provide a parser
 
 See [examples/example_parse_response_header.cpp](examples/example_parse_response_header.cpp)
-
-As for the body parser, we do not provide any body parser because there are too many kinds of body.
-Please see [cxxurl/cxxurl/ParseableOutputStringStream.h](cxxurl/cxxurl/ParseableOutputStringStream.h)
-and [cxxurl/cxxurl/HeaderParserStream.h](cxxurl/cxxurl/HeaderParserStream.h)
-to find how to implement a body parse.
 
 ## Post
 

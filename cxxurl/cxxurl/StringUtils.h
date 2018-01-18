@@ -11,9 +11,9 @@
 
 using namespace std;
 
-typedef vector<string> StringList;
-
 namespace CXXUrl {
+
+typedef vector<string> StringList;
 
 class StringUtils {
     public:

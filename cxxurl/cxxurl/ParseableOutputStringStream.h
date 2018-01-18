@@ -26,9 +26,6 @@ class ParseableOutputStringStream : public ostringstream {
 
     protected:
         virtual bool parse_func(string content) = 0;
-        virtual string dump(){
-            return "Dump Method Not Implemented";
-        }
 
 };
 

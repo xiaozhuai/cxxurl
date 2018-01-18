@@ -7,25 +7,23 @@
 #define CXXURL_HEADERPARSERSTREAM_H
 
 #include "ParseableOutputStringStream.h"
-#include "StringUtils.h"
-#include <map>
-
-
+#include "ResponseHeader.h"
 
 namespace CXXUrl {
 
 class HeaderParserStream : public ParseableOutputStringStream {
     protected:
-        bool parse_func(string content) override;
+        bool parse_func(string content){
+            try{
+                header = ResponseHeader::parse(content);
+                return true;
+            }catch (ParseResponseHeaderException& e){
+                return false;
+            }
+        };
 
     public:
-        string http_version;
-        int code;
-        string status;
-
-    public:
-        map<string, StringList> headers;
-        string dump() override;
+        ResponseHeader header;
 
 };
 

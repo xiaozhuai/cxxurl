@@ -250,7 +250,7 @@ CURLcode Request::exec(METHOD_TYPE method) {
 
     SET_CURL_OPT(CURLOPT_FOLLOWLOCATION, followLocation);
     SET_CURL_OPT(CURLOPT_USERAGENT, userAgent.c_str());
-    SET_CURL_OPT(CURLOPT_NOBODY, noBody);
+    SET_CURL_OPT(CURLOPT_NOBODY, (contentOutput == nullptr) || noBody);
 
     if(!referer.empty()){
         SET_CURL_OPT(CURLOPT_REFERER, referer.c_str());

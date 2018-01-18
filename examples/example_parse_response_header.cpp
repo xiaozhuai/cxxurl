@@ -4,33 +4,66 @@
  */
 
 #include <iostream>
-#include <sstream>
 #include <cxxurl/cxxurl_all.h>
+#include <cxxurl/HeaderParserStream.h>
 
 using namespace std;
 using namespace CXXUrl;
 
+void example1();
+void example2();
+
 int main(int argc, char** argv){
-    HeaderParserStream headerOutput;
-    ostringstream contentOutput;
+    // these two sample do the same thing
+    example1();
+    example2();
+}
+
+
+void example1(){
+    HeaderParserStream headerParserStream;
 
     Request request = RequestBuilder()
             .url("http://localhost:3000/get")
             .followLocation(true)
-            .headerOutput(&headerOutput)
-            .contentOutput(&contentOutput)
+            .headerOutput(&headerParserStream)
             .build();
     CURLcode res = request.get();
 
-    headerOutput.parse();
+    headerParserStream.parse();
+    ResponseHeader header = headerParserStream.header;
 
     cout << "------------ Code ------------" << endl
          << res << endl
          << "---------- HTTP Code ---------" << endl
-         << headerOutput.code << endl
+         << header.code << endl
+         << "------------ Host ------------" << endl
+         << header["Host"][0] << endl
          << "-------- Header Parsed -------" << endl
-         << headerOutput.dump() << endl
-//         << "----------- Content ----------" << endl
-//         << contentOutput.str() << endl
+         << header.dump() << endl
+         << flush;
+}
+
+void example2(){
+    stringstream ss;
+    ResponseHeader header;
+
+    Request request = RequestBuilder()
+            .url("http://localhost:3000/get")
+            .followLocation(true)
+            .headerOutput(&ss)
+            .build();
+    CURLcode res = request.get();
+
+    ss >> header;
+
+    cout << "------------ Code ------------" << endl
+         << res << endl
+         << "---------- HTTP Code ---------" << endl
+         << header.code << endl
+         << "------------ Host ------------" << endl
+         << header["Host"][0] << endl
+         << "-------- Header Parsed -------" << endl
+         << header.dump() << endl
          << flush;
 }

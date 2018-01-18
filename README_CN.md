@@ -47,6 +47,13 @@ See [examples/example_get.cpp](examples/example_get.cpp)
 
 要发起一个get请求并获取输出，这是所有你需要做的事情
 
+
+至于解析body，我们提供了一个json解析器
+
+See [examples/example_parse_json_body.cpp](examples/example_parse_json_body.cpp)
+
+感谢 [https://github.com/nlohmann/json](https://github.com/nlohmann/json)
+
 你可以简单的将 `contentOutput` 改为一个 `ofstream` 类的实例就可以完成下载的功能.
 
 See [examples/example_download.cpp](examples/example_download.cpp)
@@ -58,11 +65,6 @@ See [examples/example_response_header.cpp](examples/example_response_header.cpp)
 当然，我们还提供了一个解析器
 
 See [examples/example_parse_response_header.cpp](examples/example_parse_response_header.cpp)
-
-至于body的解析，由于body种类太多，我们不提供任何的body解析器，
-请参考header解析器的实现，见 [cxxurl/cxxurl/ParseableOutputStringStream.h](cxxurl/cxxurl/ParseableOutputStringStream.h)
-和 [cxxurl/cxxurl/HeaderParserStream.h](cxxurl/cxxurl/HeaderParserStream.h)
-来自行实现body解析器。
 
 ## Post
 
