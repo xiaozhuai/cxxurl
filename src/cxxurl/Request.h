@@ -56,7 +56,7 @@ class Request {
                 m_VerifySSL(false),
                 m_NoBody(false),
                 m_Verbose(false) {
-            m_UserAgent = string("") + "CXXUrl/" + StringUtils::rtrim(to_string(CXX_URL_VERSION), "0") + " " + curl_version();
+            m_UserAgent = "CXXUrl/" + CXX_URL_VERSION + " " + curl_version();
         }
         ~Request() = default;
 

@@ -5,7 +5,14 @@
 #ifndef CXXURL_VERSION_H
 #define CXXURL_VERSION_H
 
+#include <string>
 
-const static float CXX_URL_VERSION = 1.0;
+namespace CXXUrl {
+
+using namespace std;
+
+const static string CXX_URL_VERSION = "1.0";
+
+}
 
 #endif //CXXURL_VERSION_H
