@@ -9,9 +9,7 @@
 
 namespace CXXUrl {
 
-using namespace std;
-
-const static string CXX_URL_VERSION = "1.0";
+const static std::string CXX_URL_VERSION = "1.0";
 
 }
 

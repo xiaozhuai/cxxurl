@@ -31,7 +31,7 @@ void example_simple_form(){
     Request request = RequestBuilder()
             .url("http://localhost:3000/post")
             .followLocation(true)
-            .form(&form)
+            .requestBody(&form)
             .contentOutput(&contentOutput)
             .build();
     CURLcode res = request.post();
@@ -53,7 +53,7 @@ void example_multipart_form(){
     Request request = RequestBuilder()
             .url("http://localhost:3000/post")
             .followLocation(true)
-            .form(&form)
+            .requestBody(&form)
             .contentOutput(&contentOutput)
             .build();
     CURLcode res = request.post();
@@ -68,13 +68,13 @@ void example_multipart_form(){
 void example_raw_body_text(){
     ostringstream contentOutput;
     // raw form, you can set request body with text
-    RawForm form;
+    RawRequestBody form;
     form.setRawText("{ \"name\": \"xiaozhuai\" }");
     Request request = RequestBuilder()
             .url("http://localhost:3000/post")
             .followLocation(true)
-            .form(&form)
-            .contentType("text/json")
+            .requestBody(&form)
+            .contentType("application/json")
             .contentOutput(&contentOutput)
             .build();
     CURLcode res = request.post();
@@ -90,12 +90,12 @@ void example_raw_body_binary(){
     ostringstream contentOutput;
     // raw form, you can set request body with raw bytes
     char buffer[100];
-    RawForm form;
+    RawRequestBody form;
     form.setRawData(buffer, 100);
     Request request = RequestBuilder()
             .url("http://localhost:3000/post")
             .followLocation(true)
-            .form(&form)
+            .requestBody(&form)
             .contentType("application/octet-stream")
             .contentOutput(&contentOutput)
             .build();

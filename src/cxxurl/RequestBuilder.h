@@ -12,8 +12,6 @@
 
 namespace CXXUrl {
 
-using namespace std;
-
 #define DEFINE_CHAIN_METHOD_1_ARGS(type, method, setter) \
         RequestBuilder& method(type val) { \
             request.setter(val); \
@@ -37,26 +35,26 @@ class RequestBuilder {
 
         Request build() { return request; }
 
-        DEFINE_CHAIN_METHOD_1_ARGS(string, url, setUrl)
+        DEFINE_CHAIN_METHOD_1_ARGS(std::string, url, setUrl)
         DEFINE_CHAIN_METHOD_1_ARGS(bool, followLocation, setFollowLocation)
-        DEFINE_CHAIN_METHOD_1_ARGS(ostream*, contentOutput, setContentOutput)
-        DEFINE_CHAIN_METHOD_1_ARGS(ostream*, headerOutput, setHeaderOutput)
+        DEFINE_CHAIN_METHOD_1_ARGS(std::ostream*, contentOutput, setContentOutput)
+        DEFINE_CHAIN_METHOD_1_ARGS(std::ostream*, headerOutput, setHeaderOutput)
         DEFINE_CHAIN_METHOD_1_ARGS(int, maxRedirs, setMaxRedirs)
-        DEFINE_CHAIN_METHOD_1_ARGS(Form*, form, setForm)
-        DEFINE_CHAIN_METHOD_1_ARGS(string, userAgent, setUserAgent)
-        DEFINE_CHAIN_METHOD_1_ARGS(string, referer, setReferer)
-        DEFINE_CHAIN_METHOD_1_ARGS(string, contentType, setContentType)
-        DEFINE_CHAIN_METHOD_1_ARGS(Header*, header, setHeader)
+        DEFINE_CHAIN_METHOD_1_ARGS(RequestBody*, requestBody, setRequestBody)
+        DEFINE_CHAIN_METHOD_1_ARGS(std::string, userAgent, setUserAgent)
+        DEFINE_CHAIN_METHOD_1_ARGS(std::string, referer, setReferer)
+        DEFINE_CHAIN_METHOD_1_ARGS(std::string, contentType, setContentType)
+        DEFINE_CHAIN_METHOD_1_ARGS(RequestHeader*, requestHeader, setRequestHeader)
         DEFINE_CHAIN_METHOD_1_ARGS(long, timeout, setTimeout)
-        DEFINE_CHAIN_METHOD_1_ARGS(string, proxy, setProxy)
-        DEFINE_CHAIN_METHOD_1_ARGS(string, importCookie, setCookieImportFile)
-        DEFINE_CHAIN_METHOD_1_ARGS(string, exportCookie, setCookieExportFile)
+        DEFINE_CHAIN_METHOD_1_ARGS(std::string, proxy, setProxy)
+        DEFINE_CHAIN_METHOD_1_ARGS(std::string, importCookie, setCookieImportFile)
+        DEFINE_CHAIN_METHOD_1_ARGS(std::string, exportCookie, setCookieExportFile)
         DEFINE_CHAIN_METHOD_1_ARGS(bool, verifySSL, setVerifySSL)
-        DEFINE_CHAIN_METHOD_1_ARGS(string, cacert, setCacert)
+        DEFINE_CHAIN_METHOD_1_ARGS(std::string, cacert, setCacert)
         DEFINE_CHAIN_METHOD_1_ARGS(bool, noBody, setNoBody)
         DEFINE_CHAIN_METHOD_1_ARGS(bool, verbose, setVerbose)
         DEFINE_CHAIN_METHOD_2_ARGS(CURLoption, long, curlOptionLong, setCurlOptionLong);
-        DEFINE_CHAIN_METHOD_2_ARGS(CURLoption, string, curlOptionString, setCurlOptionString);
+        DEFINE_CHAIN_METHOD_2_ARGS(CURLoption, std::string, curlOptionString, setCurlOptionString);
 };
 
 }

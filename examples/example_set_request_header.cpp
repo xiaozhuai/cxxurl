@@ -13,14 +13,14 @@ using namespace CXXUrl;
 int main(int argc, char** argv){
     ostringstream contentOutput;
 
-    Header header;
+    RequestHeader header;
     header.add("name", "xiaozhuai");
     header.add("sex: male");
 
     Request request = RequestBuilder()
             .url("http://localhost:3000/header")
             .followLocation(true)
-            .header(&header)
+            .requestHeader(&header)
             .contentOutput(&contentOutput)
             .build();
     CURLcode res = request.get();

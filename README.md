@@ -83,10 +83,10 @@ Do a post request maybe something more than get request, but it's still easy
 
 See [examples/example_post.cpp](examples/example_post.cpp)
 
-CXXUrl provide three form type, `SimpleForm`, `MultipartForm` and `RawForm`.
-* SimpleForm ---- just key-values (x-www-form-urlencoded)
-* MultipartForm ---- key-values and files (multipart form data)
-* RawForm ---- raw data of request body (raw request body)
+CXXUrl provide three form type, `SimpleForm`, `MultipartForm` and `RawRequestBody`.
+* SimpleForm ---- just key-values (application/x-www-form-urlencoded)
+* MultipartForm ---- key-values and files (multipart/form-data)
+* RawRequestBody ---- raw data of request body (raw request body)
 
 ## Https
 

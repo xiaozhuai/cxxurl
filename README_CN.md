@@ -84,10 +84,10 @@ See [examples/example_parse_response_header.cpp](examples/example_parse_response
 
 See [examples/example_post.cpp](examples/example_post.cpp)
 
-CXXUrl 提供了三者form类型 `SimpleForm`, `MultipartForm` 和 `RawForm`.
-* SimpleForm ---- 仅仅是键值对 (x-www-form-urlencoded)
-* MultipartForm ---- 文件和键值对 (multipart form data)
-* RawForm ---- 二进制数据 (raw request body)
+CXXUrl 提供了三者form类型 `SimpleForm`, `MultipartForm` 和 `RawRequestBody`.
+* SimpleForm ---- 仅仅是键值对 (application/x-www-form-urlencoded)
+* MultipartForm ---- 文件和键值对 (multipart/form-data)
+* RawRequestBody ---- 二进制数据 (raw request body)
 
 ## Https
 

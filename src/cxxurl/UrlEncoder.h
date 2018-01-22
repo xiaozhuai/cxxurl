@@ -11,7 +11,7 @@
 
 namespace CXXUrl {
 
-class UrlEncode {
+class UrlEncoder {
 
     protected:
         static inline unsigned char ToHex(unsigned char x);
@@ -23,11 +23,11 @@ class UrlEncode {
 
 };
 
-unsigned char UrlEncode::ToHex(unsigned char x) {
+unsigned char UrlEncoder::ToHex(unsigned char x) {
     return  x > 9 ? x + 55 : x + 48;
 }
 
-unsigned char UrlEncode::FromHex(unsigned char x) {
+unsigned char UrlEncoder::FromHex(unsigned char x) {
     unsigned char y;
     if (x >= 'A' && x <= 'Z') y = x - 'A' + 10;
     else if (x >= 'a' && x <= 'z') y = x - 'a' + 10;
@@ -36,7 +36,7 @@ unsigned char UrlEncode::FromHex(unsigned char x) {
     return y;
 }
 
-std::string UrlEncode::encode(const std::string &str) {
+std::string UrlEncoder::encode(const std::string &str) {
     std::string strTemp;
     size_t length = str.length();
     for (size_t i = 0; i < length; i++)
@@ -59,7 +59,7 @@ std::string UrlEncode::encode(const std::string &str) {
     return strTemp;
 }
 
-std::string UrlEncode::decode(const std::string &str) {
+std::string UrlEncoder::decode(const std::string &str) {
     std::string strTemp;
     size_t length = str.length();
     for (size_t i = 0; i < length; i++)

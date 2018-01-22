@@ -8,32 +8,30 @@
 
 #include <string>
 #include <cstring>
-#include "Form.h"
+#include "RequestBody.h"
 
 namespace CXXUrl {
 
-using namespace std;
-
-class RawForm : public Form{
+class RawRequestBody : public RequestBody{
 
     public:
-        RawForm() :
-                Form(Form::RAW),
+        RawRequestBody() :
+                RequestBody(RequestBody::RAW_REQUEST_BODY),
                 m_RawData(nullptr),
                 m_Len(0),
                 m_Malloc(false){ }
 
-        ~RawForm() {
+        ~RawRequestBody() {
             if(m_Malloc && m_RawData!=nullptr) free(m_RawDataMem);
         }
 
     public:
-        RawForm &setRawText(string text, bool malloc_memory=false) {
-            this->setRawData(text.data(), text.length(), malloc_memory);
+        RawRequestBody &setRawText(std::string text) {
+            this->setRawData(text.data(), text.length(), true);
             return *this;
         }
 
-        RawForm &setRawData(const char* data, size_t len, bool malloc_memory=false) {
+        RawRequestBody &setRawData(const char* data, size_t len, bool malloc_memory=false) {
             m_Len = len;
             if(m_Malloc && m_RawData!=nullptr) free(m_RawDataMem);
 

@@ -12,21 +12,19 @@
 
 namespace CXXUrl {
 
-using namespace std;
-
-class Header {
+class RequestHeader {
 
     public:
-        Header() : m_CurlSlist(nullptr) { }
-        ~Header() {
+        RequestHeader() : m_CurlSlist(nullptr) { }
+        ~RequestHeader() {
             if(m_CurlSlist!=nullptr) curl_slist_free_all(m_CurlSlist);
         }
 
     public:
-        void add(string key, string value) {
+        void add(std::string key, std::string value) {
             m_HeadList.push_back(key + ": " + value);
         }
-        void add(string line) {
+        void add(std::string line) {
             m_HeadList.push_back(line);
         }
         struct curl_slist *getHeaders() {
@@ -39,7 +37,7 @@ class Header {
         }
 
     protected:
-        vector<string> m_HeadList;
+        std::vector<std::string> m_HeadList;
         struct curl_slist *m_CurlSlist;
 
 };

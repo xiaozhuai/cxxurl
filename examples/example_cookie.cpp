@@ -28,7 +28,7 @@ void login(){
     Request request = RequestBuilder()
             .url("http://localhost:3000/cookie/login")
             .followLocation(true)
-            .form(&form)
+            .requestBody(&form)
             .exportCookie("./cookie.txt")
             .contentOutput(&contentOutput)
             .build();

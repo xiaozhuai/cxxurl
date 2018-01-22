@@ -6,15 +6,21 @@
 #ifndef CXXURL_CXXURL_ALL_H
 #define CXXURL_CXXURL_ALL_H
 
-#include "Form.h"
-#include "Header.h"
+#include "RequestHeader.h"
+
+#include "RequestBody.h"
+#include "SimpleForm.h"
 #include "MultipartForm.h"
-#include "RawForm.h"
+#include "RawRequestBody.h"
+
+#include "ResponseHeader.h"
+
 #include "Request.h"
 #include "RequestBuilder.h"
-#include "SimpleForm.h"
-#include "UrlEncode.h"
-#include "Version.h"
+
+#include "UrlEncoder.h"
 #include "StringUtils.h"
+
+#include "Version.h"
 
 #endif //CXXURL_CXXURL_ALL_H

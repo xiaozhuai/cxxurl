@@ -11,16 +11,14 @@
 #include <map>
 #include <iostream>
 #include <curl/curl.h>
-#include "Form.h"
+#include "RequestBody.h"
 
 namespace CXXUrl {
 
-using namespace std;
-
-class MultipartForm : public Form {
+class MultipartForm : public RequestBody {
     public:
         MultipartForm() :
-                Form(Form::MULTIPART),
+                RequestBody(RequestBody::MULTIPART_FORM_DATA),
                 m_FormHeadPtr(nullptr),
                 m_FormTailPtr(nullptr) { }
 
@@ -29,17 +27,17 @@ class MultipartForm : public Form {
         }
 
     public:
-        MultipartForm &add(string key, string value) {
+        MultipartForm &add(std::string key, std::string value) {
             m_FormDataValueMap[key] = value;
             return *this;
         }
 
-        MultipartForm &addFile(string key, string filePath) {
+        MultipartForm &addFile(std::string key, std::string filePath) {
             m_FormDataFileMap[key] = filePath;
             return *this;
         }
 
-        MultipartForm &addFile(string key, string filePath, string fileName) {
+        MultipartForm &addFile(std::string key, std::string filePath, std::string fileName) {
             m_FormDataFileMap[key] = filePath;
             m_FormDataFileNameMap[key] = fileName;
             return *this;
@@ -91,9 +89,9 @@ class MultipartForm : public Form {
     protected:
         struct curl_httppost* m_FormHeadPtr;
         struct curl_httppost* m_FormTailPtr;
-        map<string, string> m_FormDataValueMap;
-        map<string, string> m_FormDataFileMap;
-        map<string, string> m_FormDataFileNameMap;
+        std::map<std::string, std::string> m_FormDataValueMap;
+        std::map<std::string, std::string> m_FormDataFileMap;
+        std::map<std::string, std::string> m_FormDataFileNameMap;
 };
 
 }

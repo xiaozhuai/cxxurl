@@ -15,8 +15,6 @@
 
 namespace CXXUrl{
 
-typedef map<string, StringList> HeaderStruct;
-
 class ParseResponseHeaderException : public std::exception
 {
     public:
@@ -39,61 +37,61 @@ class ParseResponseHeaderException : public std::exception
         std::runtime_error m;
 };
 
-class ResponseHeader : public HeaderStruct{
+class ResponseHeader : public std::map<std::string, std::vector<std::string>>{
     public:
-        static ResponseHeader parse(string content){
+        static ResponseHeader parse(std::string content){
             return ResponseHeader(content);
         }
         ResponseHeader() = default;
-        ResponseHeader(string content){
+        ResponseHeader(std::string content){
             parse_string(content);
         }
 
-        void parse_string(string content){
+        void parse_string(std::string content){
             content = StringUtils::trim(content);
-            StringList lines = StringUtils::explode("\r\n", content);
+            std::vector<std::string> lines = StringUtils::explode("\r\n", content);
             if (lines.empty()) throw ParseResponseHeaderException(1, "parse header err");
-            StringList tokens = StringUtils::explode(" ", lines[0], 3);
+            std::vector<std::string> tokens = StringUtils::explode(" ", lines[0], 3);
             if (tokens.size() != 3) throw ParseResponseHeaderException(2, "parse header err");
 
             http_version = tokens[0];
-            code = stoi(tokens[1]);
+            code = std::stoi(tokens[1]);
             status = tokens[2];
 
             for (int i = 1; i < lines.size(); i++) {
                 tokens = StringUtils::explode(":", lines[i], 2);
                 if (tokens.size() != 2) continue;
-                string key = StringUtils::trim(tokens[0]);
-                string value = StringUtils::trim(tokens[1]);
+                std::string key = StringUtils::trim(tokens[0]);
+                std::string value = StringUtils::trim(tokens[1]);
                 if (this->find(key) == this->end())
-                    (*this)[key] = StringList();
+                    (*this)[key] = std::vector<std::string>();
                 (*this)[key].push_back(value);
             }
         }
 
-        friend void operator>> (stringstream& ss, ResponseHeader& header)
+        friend void operator>> (std::stringstream& ss, ResponseHeader& header)
         {
             header.parse_string(ss.str());
         }
 
-        string dump() {
-            stringstream result;
-            result << "code: " << code << endl;
-            result << "http_version: " << http_version << endl;
-            result << "status: " << status << endl;
+        std::string dump() {
+            std::stringstream result;
+            result << "code: " << code << std::endl;
+            result << "http_version: " << http_version << std::endl;
+            result << "status: " << status << std::endl;
             for(auto& i : (*this)){
-                string key = i.first;
-                StringList values = i.second;
+                std::string key = i.first;
+                std::vector<std::string> values = i.second;
                 for(auto& value : values){
-                    result << key << ": " << value << endl;
+                    result << key << ": " << value << std::endl;
                 }
             }
             return result.str();
         }
     public:
-        string http_version;
+        std::string http_version;
         int code;
-        string status;
+        std::string status;
 };
 
 }

@@ -8,8 +8,8 @@
 using namespace std;
 using namespace CXXUrl;
 
-#define ASSERT_URL_ENCODE_EQUAL(STR, RES)   EZ_ASSERT_EQUAL(UrlEncode::encode(STR), string(RES))
-#define ASSERT_URL_DECODE_EQUAL(STR, RES)   EZ_ASSERT_EQUAL(UrlEncode::decode(STR), string(RES))
+#define ASSERT_URL_ENCODE_EQUAL(STR, RES)   EZ_ASSERT_EQUAL(UrlEncoder::encode(STR), string(RES))
+#define ASSERT_URL_DECODE_EQUAL(STR, RES)   EZ_ASSERT_EQUAL(UrlEncoder::decode(STR), string(RES))
 
 EZ_TEST {
     ASSERT_URL_ENCODE_EQUAL("aaa", "aaa");

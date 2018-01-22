@@ -8,26 +8,24 @@
 
 #include <string>
 #include <map>
-#include "Form.h"
+#include "RequestBody.h"
 
 namespace CXXUrl {
 
-using namespace std;
-
-class SimpleForm : public Form{
+class SimpleForm : public RequestBody{
     public:
-        SimpleForm() : Form(Form::SIMPLE) { }
+        SimpleForm() : RequestBody(RequestBody::X_WWW_FORM_URLENCODED) { }
 
     public:
-        SimpleForm &add(string key, string value) {
+        SimpleForm &add(std::string key, std::string value) {
             m_FormDataMap[key] = value;
             return *this;
         }
 
         char* getData() {
-            string queryStr;
+            std::string queryStr;
             for (auto i : m_FormDataMap) {
-                queryStr += "&" + UrlEncode::encode(i.first) + "=" + UrlEncode::encode(i.second);
+                queryStr += "&" + UrlEncoder::encode(i.first) + "=" + UrlEncoder::encode(i.second);
             }
             m_Data = queryStr.substr(1);
             return (char*)m_Data.data();
@@ -42,8 +40,8 @@ class SimpleForm : public Form{
         }
 
     protected:
-        map<string, string> m_FormDataMap;
-        string m_Data;
+        std::map<std::string, std::string> m_FormDataMap;
+        std::string m_Data;
 
 
 

@@ -12,17 +12,15 @@
 #include <map>
 #include <cstdlib>
 #include "Version.h"
-#include "Form.h"
+#include "RequestBody.h"
 #include "SimpleForm.h"
 #include "MultipartForm.h"
-#include "RawForm.h"
-#include "Header.h"
+#include "RawRequestBody.h"
+#include "RequestHeader.h"
 #include "StringUtils.h"
 
 
 namespace CXXUrl {
-
-using namespace std;
 
 #define DEFINE_PROP_GETTER_SETTER(type, prop) \
     protected: \
@@ -33,7 +31,7 @@ using namespace std;
 
 #define DEFINE_MAP_PUSHER_GETTER(type1, type2, prop) \
     protected: \
-        map<type1, type2> m_##prop; \
+        std::map<type1, type2> m_##prop; \
     public: \
         void set##prop(type1 key, type2 val){ m_##prop[key] = val; } \
         type2 get##prop(type1 key){ return m_##prop[key]; }
@@ -50,8 +48,8 @@ class Request {
                 m_ContentOutput(nullptr),
                 m_HeaderOutput(nullptr),
                 m_MaxRedirs(-1),
-                m_Form(nullptr),
-                m_Header(nullptr),
+                m_RequestBody(nullptr),
+                m_RequestHeader(nullptr),
                 m_Timeout(0L),
                 m_VerifySSL(false),
                 m_NoBody(false),
@@ -67,26 +65,26 @@ class Request {
         static size_t writeContent(char* buffer, size_t size, size_t count, void* stream);
         static size_t writeHeader(char* buffer, size_t size, size_t count, void* stream);
 
-        DEFINE_PROP_GETTER_SETTER(string, Url)
+        DEFINE_PROP_GETTER_SETTER(std::string, Url)
         DEFINE_PROP_GETTER_SETTER(bool, FollowLocation)
         DEFINE_PROP_GETTER_SETTER(int, MaxRedirs)
-        DEFINE_PROP_GETTER_SETTER(Form*, Form)
-        DEFINE_PROP_GETTER_SETTER(string, UserAgent)
-        DEFINE_PROP_GETTER_SETTER(string, Referer)
-        DEFINE_PROP_GETTER_SETTER(string, ContentType)
-        DEFINE_PROP_GETTER_SETTER(Header*, Header)
+        DEFINE_PROP_GETTER_SETTER(RequestBody*, RequestBody)
+        DEFINE_PROP_GETTER_SETTER(std::string, UserAgent)
+        DEFINE_PROP_GETTER_SETTER(std::string, Referer)
+        DEFINE_PROP_GETTER_SETTER(std::string, ContentType)
+        DEFINE_PROP_GETTER_SETTER(RequestHeader*, RequestHeader)
         DEFINE_PROP_GETTER_SETTER(long, Timeout)
-        DEFINE_PROP_GETTER_SETTER(string, Proxy)
-        DEFINE_PROP_GETTER_SETTER(string, CookieImportFile)
-        DEFINE_PROP_GETTER_SETTER(string, CookieExportFile)
+        DEFINE_PROP_GETTER_SETTER(std::string, Proxy)
+        DEFINE_PROP_GETTER_SETTER(std::string, CookieImportFile)
+        DEFINE_PROP_GETTER_SETTER(std::string, CookieExportFile)
         DEFINE_PROP_GETTER_SETTER(bool, VerifySSL)
-        DEFINE_PROP_GETTER_SETTER(string, Cacert)
+        DEFINE_PROP_GETTER_SETTER(std::string, Cacert)
         DEFINE_PROP_GETTER_SETTER(bool, NoBody)
         DEFINE_PROP_GETTER_SETTER(bool, Verbose)
-        DEFINE_PROP_GETTER_SETTER(ostream*, ContentOutput)
-        DEFINE_PROP_GETTER_SETTER(ostream*, HeaderOutput)
+        DEFINE_PROP_GETTER_SETTER(std::ostream*, ContentOutput)
+        DEFINE_PROP_GETTER_SETTER(std::ostream*, HeaderOutput)
         DEFINE_MAP_PUSHER_GETTER(int, long, CurlOptionLong)
-        DEFINE_MAP_PUSHER_GETTER(int, string, CurlOptionString)
+        DEFINE_MAP_PUSHER_GETTER(int, std::string, CurlOptionString)
 
     public:
         DEFINE_METHOD(get,      "GET")
@@ -97,7 +95,7 @@ class Request {
         DEFINE_METHOD(del,      "DELETE")
         DEFINE_METHOD(connect,  "CONNECT")
 
-        CURLcode exec(string method="") {
+        CURLcode exec(std::string method="") {
             m_Curl = curl_easy_init();
 
             SET_CURL_OPT(CURLOPT_VERBOSE, m_Verbose);
@@ -110,27 +108,27 @@ class Request {
             if(method!="HEAD")
                 SET_CURL_OPT(CURLOPT_CUSTOMREQUEST, method.c_str());
 
-            if (m_Form != nullptr) {
-                switch (m_Form->m_Type){
-                    case Form::SIMPLE: {
-                        auto *simpleForm = (SimpleForm *) m_Form;
+            if (m_RequestBody != nullptr) {
+                switch (m_RequestBody->m_Type){
+                    case RequestBody::X_WWW_FORM_URLENCODED: {
+                        auto *simpleForm = (SimpleForm *) m_RequestBody;
                         SET_CURL_OPT(CURLOPT_POSTFIELDS, simpleForm->getData());
                         SET_CURL_OPT(CURLOPT_POSTFIELDSIZE, simpleForm->length());
                         break;
                     }
-                    case Form::MULTIPART: {
-                        auto *multipartForm = (MultipartForm *) m_Form;
+                    case RequestBody::MULTIPART_FORM_DATA: {
+                        auto *multipartForm = (MultipartForm *) m_RequestBody;
                         SET_CURL_OPT(CURLOPT_HTTPPOST, multipartForm->getData());
                         break;
                     }
-                    case Form::RAW: {
-                        auto *rawForm = (RawForm *) m_Form;
+                    case RequestBody::RAW_REQUEST_BODY: {
+                        auto *rawForm = (RawRequestBody *) m_RequestBody;
                         SET_CURL_OPT(CURLOPT_POSTFIELDS, rawForm->getData());
                         SET_CURL_OPT(CURLOPT_POSTFIELDSIZE, rawForm->length());
                         break;
                     }
                     default:
-                        cerr << "form type unknown" << endl << flush;
+                        std::cerr << "form type unknown" << std::endl << std::flush;
                         break;
                 }
             }
@@ -146,17 +144,17 @@ class Request {
 
             bool need_reset_header = false;
             if(!m_ContentType.empty()){
-                if(m_Header==nullptr){
-                    Header tmpHeader;
-                    m_Header = &tmpHeader;
+                if(m_RequestHeader==nullptr){
+                    RequestHeader tmpHeader;
+                    m_RequestHeader = &tmpHeader;
                     need_reset_header = true;
                 }
-                m_Header->add("Content-Type", m_ContentType);
+                m_RequestHeader->add("Content-Type", m_ContentType);
             }
 
-            if(m_Header!=nullptr){
-                SET_CURL_OPT(CURLOPT_HTTPHEADER, m_Header->getHeaders());
-                if(need_reset_header) m_Header = nullptr;
+            if(m_RequestHeader!=nullptr){
+                SET_CURL_OPT(CURLOPT_HTTPHEADER, m_RequestHeader->getHeaders());
+                if(need_reset_header) m_RequestHeader = nullptr;
             }
 
             if(m_Timeout>0L){
@@ -214,13 +212,13 @@ class Request {
 
 size_t Request::writeContent(char *buffer, size_t size, size_t count, void *stream) {
     if(stream!= nullptr)
-        ((ostream *) stream)->write(buffer, size * count);
+        ((std::ostream *) stream)->write(buffer, size * count);
     return size * count;
 }
 
 size_t Request::writeHeader(char *buffer, size_t size, size_t count, void *stream) {
     if(stream!= nullptr)
-        ((ostream *) stream)->write(buffer, size * count);
+        ((std::ostream *) stream)->write(buffer, size * count);
     return size * count;
 }
 
