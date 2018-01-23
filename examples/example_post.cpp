@@ -48,8 +48,8 @@ void example_multipart_form(){
     // multipart form, you can upload a file, or key-value
     MultipartForm form;
     form.add("name", "xiaozhuai");
-    form.addFile("avatar", "./tao.png");
-    form.addFile("avatar2", "./tao.png", "tao2.png");
+    form.addFile("avatar", "../example_server/tao.png");
+    form.addFile("avatar2", "../example_server/tao.png", "tao2.png");
     Request request = RequestBuilder()
             .url("http://localhost:3000/post")
             .followLocation(true)

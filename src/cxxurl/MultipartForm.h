@@ -12,6 +12,7 @@
 #include <iostream>
 #include <curl/curl.h>
 #include "RequestBody.h"
+#include "FormItem.h"
 
 namespace CXXUrl {
 
@@ -28,18 +29,21 @@ class MultipartForm : public RequestBody {
 
     public:
         MultipartForm &add(std::string key, std::string value) {
-            m_FormDataValueMap[key] = value;
+            FormItem item;
+            item.type = FormItem::KEY_VALUE;
+            item.key = key;
+            item.value = value;
+            m_FormDataList.push_back(item);
             return *this;
         }
 
-        MultipartForm &addFile(std::string key, std::string filePath) {
-            m_FormDataFileMap[key] = filePath;
-            return *this;
-        }
-
-        MultipartForm &addFile(std::string key, std::string filePath, std::string fileName) {
-            m_FormDataFileMap[key] = filePath;
-            m_FormDataFileNameMap[key] = fileName;
+        MultipartForm &addFile(std::string key, std::string filePath, std::string fileName="") {
+            FormItem item;
+            item.type = FormItem::FILE;
+            item.key = key;
+            item.filePath = filePath;
+            item.fileName = fileName;
+            m_FormDataList.push_back(item);
             return *this;
         }
 
@@ -51,28 +55,31 @@ class MultipartForm : public RequestBody {
                 m_FormTailPtr = nullptr;
             }
 
-            for (auto i : m_FormDataValueMap) {
-                curl_formadd(&m_FormHeadPtr,
-                             &m_FormTailPtr,
-                             CURLFORM_COPYNAME, i.first.c_str(),
-                             CURLFORM_COPYCONTENTS, i.second.c_str(),
-                             CURLFORM_END);
-            }
-
-            for (auto i : m_FormDataFileMap) {
-                if (m_FormDataFileNameMap.find(i.first) == m_FormDataFileNameMap.end()) {
-                    curl_formadd(&m_FormHeadPtr,
-                                 &m_FormTailPtr,
-                                 CURLFORM_COPYNAME, i.first.c_str(),
-                                 CURLFORM_FILE, i.second.c_str(),
-                                 CURLFORM_END);
-                } else {
-                    curl_formadd(&m_FormHeadPtr,
-                                 &m_FormTailPtr,
-                                 CURLFORM_COPYNAME, i.first.c_str(),
-                                 CURLFORM_FILE, i.second.c_str(),
-                                 CURLFORM_FILENAME, m_FormDataFileNameMap[i.first].c_str(),
-                                 CURLFORM_END);
+            for(auto& i : m_FormDataList){
+                switch(i.type){
+                    case FormItem::ITEM_TYPE::KEY_VALUE:
+                        curl_formadd(&m_FormHeadPtr,
+                                     &m_FormTailPtr,
+                                     CURLFORM_COPYNAME, i.key.c_str(),
+                                     CURLFORM_COPYCONTENTS, i.value.c_str(),
+                                     CURLFORM_END);
+                        break;
+                    case FormItem::ITEM_TYPE::FILE:
+                        if(i.fileName.empty()){
+                            curl_formadd(&m_FormHeadPtr,
+                                         &m_FormTailPtr,
+                                         CURLFORM_COPYNAME, i.key.c_str(),
+                                         CURLFORM_FILE, i.filePath.c_str(),
+                                         CURLFORM_END);
+                        }else{
+                            curl_formadd(&m_FormHeadPtr,
+                                         &m_FormTailPtr,
+                                         CURLFORM_COPYNAME, i.key.c_str(),
+                                         CURLFORM_FILE, i.filePath.c_str(),
+                                         CURLFORM_FILENAME, i.fileName.c_str(),
+                                         CURLFORM_END);
+                        }
+                        break;
                 }
             }
 
@@ -81,17 +88,13 @@ class MultipartForm : public RequestBody {
         }
 
         void clear() {
-            m_FormDataValueMap.erase(m_FormDataValueMap.begin(), m_FormDataValueMap.end());
-            m_FormDataFileMap.erase(m_FormDataFileMap.begin(), m_FormDataFileMap.end());
-            m_FormDataFileNameMap.erase(m_FormDataFileNameMap.begin(), m_FormDataFileNameMap.end());
+            m_FormDataList.erase(m_FormDataList.begin(), m_FormDataList.end());
         }
 
     protected:
         struct curl_httppost* m_FormHeadPtr;
         struct curl_httppost* m_FormTailPtr;
-        std::map<std::string, std::string> m_FormDataValueMap;
-        std::map<std::string, std::string> m_FormDataFileMap;
-        std::map<std::string, std::string> m_FormDataFileNameMap;
+        std::vector<FormItem> m_FormDataList;
 };
 
 }

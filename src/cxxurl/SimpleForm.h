@@ -9,6 +9,7 @@
 #include <string>
 #include <map>
 #include "RequestBody.h"
+#include "FormItem.h"
 
 namespace CXXUrl {
 
@@ -18,17 +19,21 @@ class SimpleForm : public RequestBody{
 
     public:
         SimpleForm &add(std::string key, std::string value) {
-            m_FormDataMap[key] = value;
+            FormItem item;
+            item.type = FormItem::KEY_VALUE;
+            item.key = key;
+            item.value = value;
+            m_FormDataList.push_back(item);
             return *this;
         }
 
-        char* getData() {
+        const char* getData() {
             std::string queryStr;
-            for (auto i : m_FormDataMap) {
-                queryStr += "&" + UrlEncoder::encode(i.first) + "=" + UrlEncoder::encode(i.second);
+            for (auto& i : m_FormDataList) {
+                queryStr += "&" + UrlEncoder::encode(i.key) + "=" + UrlEncoder::encode(i.value);
             }
             m_Data = queryStr.substr(1);
-            return (char*)m_Data.data();
+            return m_Data.data();
         }
 
         size_t length() {
@@ -36,11 +41,11 @@ class SimpleForm : public RequestBody{
         }
 
         void clear() {
-            m_FormDataMap.erase(m_FormDataMap.begin(), m_FormDataMap.end());
+            m_FormDataList.erase(m_FormDataList.begin(), m_FormDataList.end());
         }
 
     protected:
-        std::map<std::string, std::string> m_FormDataMap;
+        std::vector<FormItem> m_FormDataList;
         std::string m_Data;
 
 
