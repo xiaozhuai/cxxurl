@@ -13,7 +13,7 @@ else()
     message(FATAL_ERROR  "CURL_NOT_FOUND")
 endif()
 
-include_directories(src json/src ${CURL_INCLUDE_DIR})
+include_directories(src json/single_include ${CURL_INCLUDE_DIR})
 
 # Add all examples target
 include(cmake/cmake_example.cmake)
@@ -27,6 +27,6 @@ add_test_directory(tests)
 include(cmake/cmake_check.cmake)
 add_check_target()
 
-file(GLOB_RECURSE CXXURL_FILES "src/cxxurl.cpp" "json/src/json.hpp" "src/cxxurl/*.h" "src/cxxurl/*.hpp")
+file(GLOB_RECURSE CXXURL_FILES "src/cxxurl.cpp" "src/cxxurl/*.h" "json/single_include/nlohmann/json.hpp")
 add_executable(cxxurl ${CXXURL_FILES})
 target_link_libraries(cxxurl ${CURL_LIBRARY})

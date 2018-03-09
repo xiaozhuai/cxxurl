@@ -5,7 +5,7 @@
 
 #include <iostream>
 #include <cxxurl/cxxurl_all.h>
-#include <json.hpp>
+#include <nlohmann/json.hpp>
 
 using namespace std;
 using namespace CXXUrl;
