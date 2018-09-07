@@ -14,19 +14,7 @@ author: xiaozhuai - [xiaozhuai7@gmail.com](xiaozhuai7@gmail.com)
 
 # Build
 
-First, clone with submodule
-```bash
-$ git clone --recursive https://github.com/xiaozhuai/cxxurl
-```
-
-If you already clone it, but without submodules, you can do this
-
-```bash
-$ cd /path/to/cxxurl
-$ git submodule update --init --recursive
-```
-
-Now, build examples and tests with cmake
+Build examples and tests with cmake
 
 ```bash
 $ cd /path/to/cxxurl
@@ -34,6 +22,7 @@ $ mkdir build
 $ cd build
 $ cmake ..
 $ make
+$ make check # run test case
 ```
 
 # Run Example

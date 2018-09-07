@@ -14,19 +14,7 @@ Under [MIT LICENSE](LICENSE)
 
 # 构建
 
-首先，克隆项目(包含子模块)
-```bash
-$ git clone --recursive https://github.com/xiaozhuai/cxxurl
-```
-
-如果你已经克隆了项目，但是没有初始化子模块，你可以这样
-
-```bash
-$ cd /path/to/cxxurl
-$ git submodule update --init --recursive
-```
-
-现在可以使用cmake来构建了
+使用cmake构建项目
 
 ```bash
 $ cd /path/to/cxxurl
@@ -34,6 +22,7 @@ $ mkdir build
 $ cd build
 $ cmake ..
 $ make
+$ make check # 运行测试用例
 ```
 
 # 运行示例
