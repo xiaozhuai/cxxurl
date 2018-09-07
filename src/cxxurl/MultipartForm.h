@@ -10,6 +10,7 @@
 #include <string>
 #include <map>
 #include <iostream>
+#include <vector>
 #include <curl/curl.h>
 #include "RequestBody.h"
 #include "FormItem.h"

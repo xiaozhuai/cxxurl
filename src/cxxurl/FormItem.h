@@ -6,6 +6,8 @@
 #ifndef CXXURL_FORMITEM_H
 #define CXXURL_FORMITEM_H
 
+#include <string>
+
 class FormItem{
     public:
         enum ITEM_TYPE{

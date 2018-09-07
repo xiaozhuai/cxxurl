@@ -8,6 +8,7 @@
 
 #include <string>
 #include <map>
+#include <vector>
 #include "RequestBody.h"
 #include "FormItem.h"
 
