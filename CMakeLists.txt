@@ -27,6 +27,6 @@ add_test_directory(tests)
 include(cmake/cmake_check.cmake)
 add_check_target()
 
-file(GLOB_RECURSE CXXURL_FILES "src/cxxurl.cpp" "src/cxxurl/*.h" "json/single_include/nlohmann/json.hpp")
+file(GLOB_RECURSE CXXURL_FILES "src/cxxurl.cpp" "src/cxxurl/*.h" "thirdparty/json/json.hpp")
 add_executable(cxxurl ${CXXURL_FILES})
 target_link_libraries(cxxurl ${CURL_LIBRARY})
