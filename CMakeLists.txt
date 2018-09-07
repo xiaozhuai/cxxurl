@@ -13,7 +13,7 @@ else()
     message(FATAL_ERROR  "CURL_NOT_FOUND")
 endif()
 
-include_directories(src json/single_include ${CURL_INCLUDE_DIR})
+include_directories(src thirdparty/json ${CURL_INCLUDE_DIR})
 
 # Add all examples target
 include(cmake/cmake_example.cmake)
