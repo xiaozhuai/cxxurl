@@ -145,8 +145,7 @@ class Request {
             bool need_reset_header = false;
             if(!m_ContentType.empty()){
                 if(m_RequestHeader==nullptr){
-                    RequestHeader tmpHeader;
-                    m_RequestHeader = &tmpHeader;
+                    m_RequestHeader = new RequestHeader();
                     need_reset_header = true;
                 }
                 m_RequestHeader->add("Content-Type", m_ContentType);
@@ -154,7 +153,6 @@ class Request {
 
             if(m_RequestHeader!=nullptr){
                 SET_CURL_OPT(CURLOPT_HTTPHEADER, m_RequestHeader->getHeaders());
-                if(need_reset_header) m_RequestHeader = nullptr;
             }
 
             if(m_Timeout>0L){
@@ -206,6 +204,12 @@ class Request {
             CURLcode res;
             res = curl_easy_perform(m_Curl);
             curl_easy_cleanup(m_Curl);
+
+            if (need_reset_header) {
+                delete m_RequestHeader;
+                m_RequestHeader = nullptr;
+            }
+
             return res;
         }
 };
