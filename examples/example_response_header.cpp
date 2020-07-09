@@ -20,10 +20,10 @@ int main(int argc, char** argv){
             .headerOutput(&headerOutput)
             .contentOutput(&contentOutput)
             .build();
-    CURLcode res = request.get();
+    auto const res = request.get();
 
     cout << "------------ Code ------------" << endl
-         << res << endl
+         << res.getCode() << endl
          << "----------- Header -----------" << endl
          << headerOutput.str() << endl
 //         << "----------- Content ----------" << endl

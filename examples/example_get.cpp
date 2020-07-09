@@ -18,10 +18,10 @@ int main(int argc, char** argv){
             .contentOutput(&contentOutput)
             .build();
 
-    CURLcode res = request.get();
+    auto const res = request.get();
 
     cout << "------------ Code ------------" << endl
-         << res << endl
+         << res.getCode() << endl
          << "----------- Content ----------" << endl
          << contentOutput.str() << endl
          << flush;

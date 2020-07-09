@@ -12,7 +12,7 @@ using namespace CXXUrl;
 
 int main(int argc, char** argv){
     stringstream ss;
-    CURLcode res;
+    ExecResult res;
     Request request = RequestBuilder()
             .url("http://localhost:3000/method")
             .followLocation(true)
@@ -28,7 +28,7 @@ int main(int argc, char** argv){
      * res = request.exec("GET");
      */
     cout << "------------ Code ------------" << endl
-         << res << endl
+         << res.getCode() << endl
          << "----------- Content ----------" << endl
          << ss.str() << endl
          << flush;
@@ -41,7 +41,7 @@ int main(int argc, char** argv){
      * res = request.exec("POST");
      */
     cout << "------------ Code ------------" << endl
-         << res << endl
+         << res.getCode() << endl
          << "----------- Content ----------" << endl
          << ss.str() << endl
          << flush;

@@ -32,10 +32,10 @@ void login(){
             .exportCookie("./cookie.txt")
             .contentOutput(&contentOutput)
             .build();
-    CURLcode res = request.post();
+    auto const res = request.post();
 
     cout << "------------ Code ------------" << endl
-         << res << endl
+         << res.getCode() << endl
          << "----------- Content ----------" << endl
          << contentOutput.str() << endl
          << flush;
@@ -50,10 +50,10 @@ void profile(){
             .importCookie("./cookie.txt")
             .contentOutput(&contentOutput)
             .build();
-    CURLcode res = request.get();
+    auto const res = request.get();
 
     cout << "------------ Code ------------" << endl
-         << res << endl
+         << res.getCode() << endl
          << "----------- Content ----------" << endl
          << contentOutput.str() << endl
          << flush;
