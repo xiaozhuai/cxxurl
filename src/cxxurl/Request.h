@@ -34,7 +34,7 @@ namespace CXXUrl {
         std::map<type1, type2> m_##prop; \
     public: \
         void set##prop(type1 key, type2 val){ m_##prop[key] = val; } \
-        type2 get##prop(type1 key){ return m_##prop[key]; }
+        type2 get##prop(type1 key) const { return m_##prop.at(key); }
 
 #define DEFINE_METHOD(func_name, method) ExecResult func_name(){ return exec(method); }
 
