@@ -6,8 +6,6 @@
 #ifndef CXXURL_RESPONSEHEADER_H
 #define CXXURL_RESPONSEHEADER_H
 
-#endif //CXXURL_RESPONSEHEADER_H
-
 #include <exception>
 #include "StringUtils.h"
 #include <map>
@@ -95,3 +93,5 @@ class ResponseHeader : public std::map<std::string, std::vector<std::string>>{
 };
 
 }
+
+#endif //CXXURL_RESPONSEHEADER_H
