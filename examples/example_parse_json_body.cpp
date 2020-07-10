@@ -21,12 +21,12 @@ int main(int argc, char** argv){
             .followLocation(true)
             .contentOutput(&ss)
             .build();
-    CURLcode res = request.get();
+    auto const res = request.get();
 
     ss >> json;
 
     cout << "------------ Code ------------" << endl
-         << res << endl
+         << res.getCode() << endl
          << "--------- Body Parsed --------" << endl
          << "project :  " << json["project"].get<string>() << endl
          << "author  :  " << json["author"].get<string>()  << endl

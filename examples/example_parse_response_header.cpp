@@ -18,12 +18,12 @@ int main(int argc, char** argv){
             .followLocation(true)
             .headerOutput(&ss)
             .build();
-    CURLcode res = request.get();
+    auto const res = request.get();
 
     ss >> header;
 
     cout << "------------ Code ------------" << endl
-         << res << endl
+         << res.getCode() << endl
          << "---------- HTTP Code ---------" << endl
          << header.code << endl
          << "------------ Host ------------" << endl

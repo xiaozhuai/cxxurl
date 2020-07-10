@@ -19,12 +19,12 @@ int main(int argc, char** argv){
             .followLocation(true)
             .contentOutput(&downloadFile)
             .build();
-    CURLcode res = request.get();
+    auto const res = request.get();
 
     downloadFile.flush();
 
     cout << "------------ Code ------------" << endl
-         << res << endl
+         << res.getCode() << endl
          << "----------- Content ----------" << endl
          << "Content has wrote to ./tao.png" << endl
          << flush;

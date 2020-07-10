@@ -34,10 +34,10 @@ void example_simple_form(){
             .requestBody(&form)
             .contentOutput(&contentOutput)
             .build();
-    CURLcode res = request.post();
+    auto const res = request.post();
 
     cout << "------------ Code ------------" << endl
-         << res << endl
+         << res.getCode() << endl
          << "----------- Content ----------" << endl
          << contentOutput.str() << endl
          << flush;
@@ -56,10 +56,10 @@ void example_multipart_form(){
             .requestBody(&form)
             .contentOutput(&contentOutput)
             .build();
-    CURLcode res = request.post();
+    auto const res = request.post();
 
     cout << "------------ Code ------------" << endl
-         << res << endl
+         << res.getCode() << endl
          << "----------- Content ----------" << endl
          << contentOutput.str() << endl
          << flush;
@@ -77,10 +77,10 @@ void example_raw_body_text(){
             .contentType("application/json")
             .contentOutput(&contentOutput)
             .build();
-    CURLcode res = request.post();
+    auto const res = request.post();
 
     cout << "------------ Code ------------" << endl
-         << res << endl
+         << res.getCode() << endl
          << "----------- Content ----------" << endl
          << contentOutput.str() << endl
          << flush;
@@ -99,10 +99,10 @@ void example_raw_body_binary(){
             .contentType("application/octet-stream")
             .contentOutput(&contentOutput)
             .build();
-    CURLcode res = request.post();
+    auto const res = request.post();
 
     cout << "------------ Code ------------" << endl
-         << res << endl
+         << res.getCode() << endl
          << "----------- Content ----------" << endl
          << contentOutput.str() << endl
          << flush;

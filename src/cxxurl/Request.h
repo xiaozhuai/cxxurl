@@ -27,18 +27,44 @@ namespace CXXUrl {
         type m_##prop; \
     public: \
         void set##prop(type val){ m_##prop = val; } \
-        type get##prop(){ return m_##prop; }
+        type get##prop() const { return m_##prop; }
 
 #define DEFINE_MAP_PUSHER_GETTER(type1, type2, prop) \
     protected: \
         std::map<type1, type2> m_##prop; \
     public: \
         void set##prop(type1 key, type2 val){ m_##prop[key] = val; } \
-        type2 get##prop(type1 key){ return m_##prop[key]; }
+        type2 get##prop(type1 key) const { return m_##prop.at(key); }
 
-#define DEFINE_METHOD(func_name, method) CURLcode func_name(){ return exec(method); }
+#define DEFINE_METHOD(func_name, method) ExecResult func_name(){ return exec(method); }
 
 #define SET_CURL_OPT(opt,value) curl_easy_setopt(m_Curl,(CURLoption)(opt),(value))
+
+class ExecResult {
+public:
+    ExecResult()
+            : ExecResult(CURLE_GOT_NOTHING, 0) {
+
+    }
+
+    /**
+     *
+     * @param curl_code CURL code.
+     * @param http_code HTTP Code related to the result.
+     */
+    ExecResult(CURLcode curl_code, long http_code)
+            : m_Code(curl_code), m_HTTPCode(http_code) {
+
+    }
+
+    explicit operator bool() const {
+        return getCode() == CURLE_OK;
+    }
+
+    DEFINE_PROP_GETTER_SETTER(CURLcode, Code)
+
+    DEFINE_PROP_GETTER_SETTER(long, HTTPCode)
+};
 
 class Request {
     public:
@@ -95,7 +121,7 @@ class Request {
         DEFINE_METHOD(del,      "DELETE")
         DEFINE_METHOD(connect,  "CONNECT")
 
-        CURLcode exec(std::string method="") {
+        ExecResult exec( std::string method="") {
             m_Curl = curl_easy_init();
 
             SET_CURL_OPT(CURLOPT_VERBOSE, m_Verbose);
@@ -196,21 +222,22 @@ class Request {
                 SET_CURL_OPT(i.first, i.second);
             }
 
-            for (auto i : m_CurlOptionString) {
+            for (auto const& i : m_CurlOptionString) {
                 SET_CURL_OPT(i.first, i.second.c_str());
             }
 
-
-            CURLcode res;
-            res = curl_easy_perform(m_Curl);
+            auto const rc = curl_easy_perform(m_Curl);
+            long httpCode(0);
+            if ( rc == CURLE_OK ) {
+              curl_easy_getinfo(m_Curl, CURLINFO_RESPONSE_CODE, &httpCode);
+            }
             curl_easy_cleanup(m_Curl);
 
             if (need_reset_header) {
                 delete m_RequestHeader;
                 m_RequestHeader = nullptr;
             }
-
-            return res;
+            return ExecResult{rc, httpCode};
         }
 };
 
